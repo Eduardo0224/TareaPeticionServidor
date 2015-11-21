@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -19,14 +20,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="MwW-BC-0Q1">
-                                <rect key="frame" x="36" y="318" width="303" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ingrese el ISBN, ej. 978-84-376-0494-7" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="MwW-BC-0Q1">
+                                <rect key="frame" x="32" y="400" width="311" height="30"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="13"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="search"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0eQ-VN-G2r">
-                                <rect key="frame" x="36" y="370" width="303" height="277"/>
+                                <rect key="frame" x="36" y="448" width="303" height="199"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.28674227000000002" green="0.3699073792" blue="0.5429201722" alpha="1" colorSpace="calibratedRGB"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -34,7 +35,7 @@
                                 <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingrese el ISBN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpg-PX-vlZ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Título del libro" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpg-PX-vlZ">
                                 <rect key="frame" x="32" y="254" width="311" height="32"/>
                                 <animations/>
                                 <constraints>
@@ -51,26 +52,54 @@
                                     <constraint firstAttribute="width" secondItem="KTO-a2-2Ny" secondAttribute="height" multiplier="8:3" id="Rud-ZK-lGa"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Título del libro" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ivm-pN-Jwa" userLabel="Autor">
+                                <rect key="frame" x="125" y="294" width="186" height="32"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="hXz-dj-Opc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="16"/>
+                                <color key="textColor" red="1" green="0.96782196490000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="por" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0q-U0-goC" userLabel="Por">
+                                <rect key="frame" x="96" y="294" width="24" height="32"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="TzX-cW-8Oe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.28674227000000002" green="0.3699073792" blue="0.5429201722" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="KTO-a2-2Ny" secondAttribute="trailing" constant="44" id="1q8-9r-Dpy"/>
-                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="9Bf-Oe-SqR"/>
+                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="9Bf-Oe-SqR"/>
                             <constraint firstItem="0eQ-VN-G2r" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9Hy-oR-8rQ"/>
                             <constraint firstItem="KTO-a2-2Ny" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="43" id="CYG-wm-ZTQ"/>
                             <constraint firstItem="KTO-a2-2Ny" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Cuj-hN-uOP"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="Doi-9T-Ej5"/>
+                            <constraint firstItem="Ivm-pN-Jwa" firstAttribute="top" secondItem="gpg-PX-vlZ" secondAttribute="bottom" constant="8" id="EZA-nC-lIB"/>
                             <constraint firstItem="MwW-BC-0Q1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Eo1-fy-YMa"/>
-                            <constraint firstItem="0eQ-VN-G2r" firstAttribute="top" secondItem="MwW-BC-0Q1" secondAttribute="bottom" constant="22" id="QRs-gG-C6n"/>
-                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="top" secondItem="gpg-PX-vlZ" secondAttribute="bottom" constant="32" id="Rjl-aP-Xv2"/>
+                            <constraint firstItem="0eQ-VN-G2r" firstAttribute="top" secondItem="MwW-BC-0Q1" secondAttribute="bottom" constant="18" id="QRs-gG-C6n"/>
+                            <constraint firstItem="M0q-U0-goC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="80" id="VtI-Z8-qEH"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="top" secondItem="KTO-a2-2Ny" secondAttribute="bottom" constant="31" id="WLQ-iA-ISK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0eQ-VN-G2r" secondAttribute="trailing" constant="20" id="XHb-0Q-9Ks"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="centerX" secondItem="MwW-BC-0Q1" secondAttribute="centerX" id="aCF-bf-CLL"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="MwW-BC-0Q1" secondAttribute="trailing" constant="20" id="eBl-2o-h5i"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MwW-BC-0Q1" secondAttribute="trailing" constant="16" id="eBl-2o-h5i"/>
                             <constraint firstItem="0eQ-VN-G2r" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="exf-w3-UOm"/>
-                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="i5z-HV-8IG"/>
+                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="top" secondItem="Ivm-pN-Jwa" secondAttribute="bottom" constant="74" id="fJS-ux-Q29"/>
+                            <constraint firstItem="M0q-U0-goC" firstAttribute="width" relation="lessThanOrEqual" secondItem="Ivm-pN-Jwa" secondAttribute="width" multiplier="0.5" id="hlN-VF-FRI"/>
+                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="81.5" id="i5z-HV-8IG"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0eQ-VN-G2r" secondAttribute="bottom" constant="20" id="o2L-nm-CoF"/>
+                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="top" secondItem="M0q-U0-goC" secondAttribute="bottom" constant="74" id="rc8-x6-t1F"/>
+                            <constraint firstItem="Ivm-pN-Jwa" firstAttribute="leading" secondItem="M0q-U0-goC" secondAttribute="trailing" constant="5" id="tuM-Fo-kkm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Ivm-pN-Jwa" secondAttribute="trailing" constant="48" id="xSB-dv-Gqe"/>
+                            <constraint firstItem="M0q-U0-goC" firstAttribute="top" secondItem="gpg-PX-vlZ" secondAttribute="bottom" constant="8" id="xhe-uD-ymh"/>
+                            <constraint firstItem="M0q-U0-goC" firstAttribute="centerY" secondItem="Ivm-pN-Jwa" secondAttribute="centerY" id="z8x-l8-SQR"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

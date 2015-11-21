@@ -14,7 +14,6 @@
 		B23D0A411BFC05EB007CFF3C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B23D0A3F1BFC05EB007CFF3C /* LaunchScreen.storyboard */; };
 		B23D0A4C1BFC05EB007CFF3C /* TareaPeticionServidorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D0A4B1BFC05EB007CFF3C /* TareaPeticionServidorTests.swift */; };
 		B23D0A571BFC05EC007CFF3C /* TareaPeticionServidorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D0A561BFC05EC007CFF3C /* TareaPeticionServidorUITests.swift */; };
-		B23D0A651BFC2055007CFF3C /* isbn_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B23D0A641BFC2055007CFF3C /* isbn_logo.png */; };
 		B23D0A671BFC2400007CFF3C /* logo_isbn.png in Resources */ = {isa = PBXBuildFile; fileRef = B23D0A661BFC2400007CFF3C /* logo_isbn.png */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +48,6 @@
 		B23D0A521BFC05EC007CFF3C /* TareaPeticionServidorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TareaPeticionServidorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B23D0A561BFC05EC007CFF3C /* TareaPeticionServidorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TareaPeticionServidorUITests.swift; sourceTree = "<group>"; };
 		B23D0A581BFC05EC007CFF3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B23D0A641BFC2055007CFF3C /* isbn_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = isbn_logo.png; sourceTree = "<group>"; };
 		B23D0A661BFC2400007CFF3C /* logo_isbn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_isbn.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,7 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				B23D0A661BFC2400007CFF3C /* logo_isbn.png */,
-				B23D0A641BFC2055007CFF3C /* isbn_logo.png */,
 				B23D0A361BFC05EB007CFF3C /* AppDelegate.swift */,
 				B23D0A381BFC05EB007CFF3C /* ViewController.swift */,
 				B23D0A3A1BFC05EB007CFF3C /* Main.storyboard */,
@@ -235,7 +232,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B23D0A651BFC2055007CFF3C /* isbn_logo.png in Resources */,
 				B23D0A411BFC05EB007CFF3C /* LaunchScreen.storyboard in Resources */,
 				B23D0A3E1BFC05EB007CFF3C /* Assets.xcassets in Resources */,
 				B23D0A671BFC2400007CFF3C /* logo_isbn.png in Resources */,
@@ -492,6 +488,7 @@
 				B23D0A5D1BFC05EC007CFF3C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B23D0A5E1BFC05EC007CFF3C /* Build configuration list for PBXNativeTarget "TareaPeticionServidorTests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +497,7 @@
 				B23D0A601BFC05EC007CFF3C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B23D0A611BFC05EC007CFF3C /* Build configuration list for PBXNativeTarget "TareaPeticionServidorUITests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +506,7 @@
 				B23D0A631BFC05EC007CFF3C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
