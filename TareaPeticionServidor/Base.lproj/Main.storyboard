@@ -132,6 +132,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="lblTituloLibro" destination="gpg-PX-vlZ" id="W4Y-XR-114"/>
                         <outlet property="txtField" destination="MwW-BC-0Q1" id="z2B-KZ-JyR"/>
                         <outlet property="txtViewResponse" destination="0eQ-VN-G2r" id="Gix-9z-2GK"/>
                     </connections>

@@ -12,6 +12,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var txtField: UITextField!
     @IBOutlet weak var txtViewResponse: UITextView!
+    @IBOutlet weak var lblTituloLibro: UILabel!
     
     // Establecemos la dirección del servidor
     var urls = "https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:"
@@ -40,6 +41,23 @@ class ViewController: UIViewController, UITextFieldDelegate {
         do {
             // Hacemos la petición a trevés de la clase NSData (petición que va a esperar hasta recibir respuesta del servidor)
             let datos : NSData? = try NSData(contentsOfURL: url!, options: [])
+            
+            // MARK: Analisis del JSON
+            // Como puede que lo que traiga no este en formato json, debemos hacer un do, catch
+            do {
+                // va a ser el resultado de los datos obtenidos los que vamos a analizar
+                let json = try NSJSONSerialization.JSONObjectWithData(datos!, options: .MutableLeaves)                
+                
+                // Voy a hacer un recorrido por el diccionario (que es todo el json), e ir filtrando entre atributos
+                let objJson = json as! NSDictionary
+                let diccionarioISBN = objJson["ISBN:\(self.txtField.text!)"]                
+                self.lblTituloLibro.text = diccionarioISBN!["title"] as! NSString as String
+                
+            } catch _ {
+                
+            }
+
+            
             // Los datos obtenidos los codificamos a UTF8
             let texto = NSString(data: datos!, encoding: NSUTF8StringEncoding)
             // finalmente imprimimos en consola
