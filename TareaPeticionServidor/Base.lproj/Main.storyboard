@@ -36,7 +36,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Título del libro" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpg-PX-vlZ">
-                                <rect key="frame" x="32" y="254" width="311" height="32"/>
+                                <rect key="frame" x="32" y="238" width="311" height="32"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="ZJe-Gi-qkA"/>
@@ -46,61 +46,89 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_isbn.png" translatesAutoresizingMaskIntoConstraints="NO" id="KTO-a2-2Ny">
-                                <rect key="frame" x="59" y="127" width="256" height="96"/>
+                                <rect key="frame" x="59" y="111" width="256" height="96"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="KTO-a2-2Ny" secondAttribute="height" multiplier="8:3" id="Rud-ZK-lGa"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Título del libro" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ivm-pN-Jwa" userLabel="Autor">
-                                <rect key="frame" x="125" y="294" width="186" height="32"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="emF-vp-pYB">
+                                <rect key="frame" x="38" y="278" width="300" height="35"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="por" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0q-U0-goC" userLabel="Por">
+                                        <rect key="frame" x="0.0" y="8" width="105.5" height="19"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="TzX-cW-8Oe"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="TzX-cW-8Oe"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Autor del libro" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Ivm-pN-Jwa" userLabel="Autor">
+                                        <rect key="frame" x="110.5" y="0.0" width="189.5" height="35"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="hXz-dj-Opc"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="16"/>
+                                        <color key="textColor" red="1" green="0.96782196490000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="hXz-dj-Opc"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
+                                </subviews>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="hXz-dj-Opc"/>
+                                    <constraint firstAttribute="height" constant="35" id="Gwa-yV-VkG"/>
+                                    <constraint firstItem="Ivm-pN-Jwa" firstAttribute="height" secondItem="emF-vp-pYB" secondAttribute="height" id="jeK-Ly-HsM"/>
+                                    <constraint firstItem="Ivm-pN-Jwa" firstAttribute="width" secondItem="M0q-U0-goC" secondAttribute="width" multiplier="1.8" id="uAK-JJ-HlG"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="16"/>
-                                <color key="textColor" red="1" green="0.96782196490000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="por" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0q-U0-goC" userLabel="Por">
-                                <rect key="frame" x="96" y="294" width="24" height="32"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="TzX-cW-8Oe"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="16"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </stackView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.28674227000000002" green="0.3699073792" blue="0.5429201722" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="KTO-a2-2Ny" secondAttribute="trailing" constant="44" id="1q8-9r-Dpy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="emF-vp-pYB" secondAttribute="trailing" constant="102" id="2C6-DN-sQg"/>
                             <constraint firstItem="MwW-BC-0Q1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="9Bf-Oe-SqR"/>
                             <constraint firstItem="0eQ-VN-G2r" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9Hy-oR-8rQ"/>
+                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="top" secondItem="emF-vp-pYB" secondAttribute="bottom" constant="87" id="9al-IH-osM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="emF-vp-pYB" secondAttribute="trailing" constant="54" id="Bk7-XN-Ubg"/>
                             <constraint firstItem="KTO-a2-2Ny" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="43" id="CYG-wm-ZTQ"/>
                             <constraint firstItem="KTO-a2-2Ny" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Cuj-hN-uOP"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="Doi-9T-Ej5"/>
-                            <constraint firstItem="Ivm-pN-Jwa" firstAttribute="top" secondItem="gpg-PX-vlZ" secondAttribute="bottom" constant="8" id="EZA-nC-lIB"/>
                             <constraint firstItem="MwW-BC-0Q1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Eo1-fy-YMa"/>
+                            <constraint firstItem="emF-vp-pYB" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="EzY-JU-Bhn"/>
+                            <constraint firstItem="emF-vp-pYB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HqN-0m-988"/>
+                            <constraint firstItem="emF-vp-pYB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="101" id="K7U-aU-GHN"/>
                             <constraint firstItem="0eQ-VN-G2r" firstAttribute="top" secondItem="MwW-BC-0Q1" secondAttribute="bottom" constant="18" id="QRs-gG-C6n"/>
-                            <constraint firstItem="M0q-U0-goC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="80" id="VtI-Z8-qEH"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="top" secondItem="KTO-a2-2Ny" secondAttribute="bottom" constant="31" id="WLQ-iA-ISK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0eQ-VN-G2r" secondAttribute="trailing" constant="20" id="XHb-0Q-9Ks"/>
+                            <constraint firstItem="emF-vp-pYB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Yhu-Px-iJN"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="centerX" secondItem="MwW-BC-0Q1" secondAttribute="centerX" id="aCF-bf-CLL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MwW-BC-0Q1" secondAttribute="trailing" constant="16" id="eBl-2o-h5i"/>
                             <constraint firstItem="0eQ-VN-G2r" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="exf-w3-UOm"/>
-                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="top" secondItem="Ivm-pN-Jwa" secondAttribute="bottom" constant="74" id="fJS-ux-Q29"/>
-                            <constraint firstItem="M0q-U0-goC" firstAttribute="width" relation="lessThanOrEqual" secondItem="Ivm-pN-Jwa" secondAttribute="width" multiplier="0.5" id="hlN-VF-FRI"/>
                             <constraint firstItem="MwW-BC-0Q1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="81.5" id="i5z-HV-8IG"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0eQ-VN-G2r" secondAttribute="bottom" constant="20" id="o2L-nm-CoF"/>
-                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="top" secondItem="M0q-U0-goC" secondAttribute="bottom" constant="74" id="rc8-x6-t1F"/>
-                            <constraint firstItem="Ivm-pN-Jwa" firstAttribute="leading" secondItem="M0q-U0-goC" secondAttribute="trailing" constant="5" id="tuM-Fo-kkm"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Ivm-pN-Jwa" secondAttribute="trailing" constant="48" id="xSB-dv-Gqe"/>
-                            <constraint firstItem="M0q-U0-goC" firstAttribute="top" secondItem="gpg-PX-vlZ" secondAttribute="bottom" constant="8" id="xhe-uD-ymh"/>
-                            <constraint firstItem="M0q-U0-goC" firstAttribute="centerY" secondItem="Ivm-pN-Jwa" secondAttribute="centerY" id="z8x-l8-SQR"/>
+                            <constraint firstItem="emF-vp-pYB" firstAttribute="top" secondItem="gpg-PX-vlZ" secondAttribute="bottom" constant="8" id="wW6-RC-tNM"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="2C6-DN-sQg"/>
+                                <exclude reference="Bk7-XN-Ubg"/>
+                                <exclude reference="HqN-0m-988"/>
+                                <exclude reference="K7U-aU-GHN"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
