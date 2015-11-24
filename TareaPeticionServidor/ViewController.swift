@@ -24,6 +24,31 @@ class ViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         txtField.delegate = self
+        
+        // MARK: Efecto Blur
+        imgBackground.backgroundColor = UIColor.clearColor()
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        
+        //always fill the view
+        blurEffectView.frame = imgBackground.bounds
+        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        
+        imgBackground.addSubview(blurEffectView)
+    }
+    
+    func imageWithBorderFromImage(source: UIImage) -> UIImage {
+        let size: CGSize = source.size
+        UIGraphicsBeginImageContext(size)
+        let rect: CGRect = CGRectMake(0, 0, size.width, size.height)
+        source.drawInRect(rect, blendMode: .Darken, alpha: 1.0)
+        let context: CGContextRef = UIGraphicsGetCurrentContext()!
+        CGContextSetRGBStrokeColor(context, 255, 255, 255, 1.0)
+        CGContextStrokeRectWithWidth(context, rect, 10.0)
+        let testImg: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return testImg
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -65,11 +90,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 
                 let urlImg = NSURL(string: covers["large"] as! NSString as String)
                 let data = NSData(contentsOfURL: urlImg!) //make sure your image in this url does exist, otherwise unwrap in a if let check
-                self.imgPortadaLibro.image = UIImage(data: data!)
+                
+                
                 self.imgBackground.image = UIImage(data: data!)
-                
-                
-                
+                self.imgPortadaLibro.image = imageWithBorderFromImage(UIImage(data: data!)!)
+            
             } catch _ {
                 
             }
