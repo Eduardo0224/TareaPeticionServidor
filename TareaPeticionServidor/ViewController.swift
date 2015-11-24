@@ -17,6 +17,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var imgPortadaLibro: UIImageView!
     @IBOutlet weak var imgBackground: UIImageView!
     
+    var urlImg : NSURL?
+    
     // Establecemos la dirección del servidor
     var urls = "https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:"
     
@@ -88,12 +90,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 // Obtenemos el url de la imagen de portada y se lo pasamos a el UIImage
                 let covers = diccionarioISBN!["cover"] as! NSDictionary
                 
-                let urlImg = NSURL(string: covers["large"] as! NSString as String)
-                let data = NSData(contentsOfURL: urlImg!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+                urlImg = NSURL(string: covers["large"] as! NSString as String)
                 
                 
-                self.imgBackground.image = UIImage(data: data!)
-                self.imgPortadaLibro.image = imageWithBorderFromImage(UIImage(data: data!)!)
             
             } catch _ {
                 
@@ -114,6 +113,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
             self.presentViewController(alert, animated: true, completion: nil)
             
         }
+        
+        // ---
+        // se crea una sesión compartida
+        let sesion = NSURLSession.sharedSession()
+        
+        // El bloque es el procesameinto y la respuesta de la petición
+        let bloque = { (datos: NSData?, resp: NSURLResponse?, error: NSError?) -> Void in
+            let dataImg = NSData(contentsOfURL: self.urlImg!)
+            self.imgBackground.image = UIImage(data: dataImg!)
+            self.imgPortadaLibro.image = self.imageWithBorderFromImage(UIImage(data: dataImg!)!)
+            
+        }
+        // Creamos una tarea para la sesión con una llamada Callback
+        let dataTask = sesion.dataTaskWithURL(urlImg!, completionHandler: bloque)
+        // se empieza la ejecución de la tarea con el método resume
+        dataTask.resume()
+        // ---
+
 
         
     }
