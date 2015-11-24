@@ -15,6 +15,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lblTituloLibro: UILabel!
     @IBOutlet weak var lblAutors: UILabel!
     @IBOutlet weak var imgPortadaLibro: UIImageView!
+    @IBOutlet weak var imgBackground: UIImageView!
     
     // Establecemos la dirección del servidor
     var urls = "https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:"
@@ -65,6 +66,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 let urlImg = NSURL(string: covers["large"] as! NSString as String)
                 let data = NSData(contentsOfURL: urlImg!) //make sure your image in this url does exist, otherwise unwrap in a if let check
                 self.imgPortadaLibro.image = UIImage(data: data!)
+                self.imgBackground.image = UIImage(data: data!)
                 
                 
                 

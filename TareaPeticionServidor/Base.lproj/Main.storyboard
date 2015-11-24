@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -20,27 +19,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Gnw-fW-NNI">
-                                <rect key="frame" x="94" y="83" width="188" height="96"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_isbn.png" translatesAutoresizingMaskIntoConstraints="NO" id="KTO-a2-2Ny">
-                                        <rect key="frame" x="0.0" y="0.0" width="188" height="96"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="KTO-a2-2Ny" secondAttribute="height" multiplier="8:3" id="Rud-ZK-lGa"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="Rud-ZK-lGa"/>
-                                            </mask>
-                                        </variation>
-                                    </imageView>
-                                </subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_isbn.png" translatesAutoresizingMaskIntoConstraints="NO" id="2wN-Lh-PqW" userLabel="ImgBackground">
+                                <rect key="frame" x="-4" y="0.0" width="383" height="278"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="0.5146276595744681" colorSpace="calibratedWhite"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_isbn.png" translatesAutoresizingMaskIntoConstraints="NO" id="KTO-a2-2Ny">
+                                <rect key="frame" x="90" y="27" width="196" height="223"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="96" id="ecl-ed-ydB"/>
+                                    <constraint firstAttribute="width" constant="188" id="eku-lm-7D7"/>
+                                    <constraint firstAttribute="height" constant="223" id="fOb-Bg-A3Z"/>
                                 </constraints>
-                            </stackView>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="eku-lm-7D7"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Título del libro" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpg-PX-vlZ">
                                 <rect key="frame" x="32" y="315" width="311" height="32"/>
                                 <animations/>
@@ -70,7 +66,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Autor del libro" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Ivm-pN-Jwa" userLabel="Autor">
-                                        <rect key="frame" x="110.5" y="0.0" width="189.5" height="35"/>
+                                        <rect key="frame" x="110" y="0.0" width="189.5" height="35"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="hXz-dj-Opc"/>
@@ -114,34 +110,37 @@
                         <animations/>
                         <color key="backgroundColor" red="0.28674227000000002" green="0.3699073792" blue="0.5429201722" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="KTO-a2-2Ny" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="74" id="0py-Ae-otH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="emF-vp-pYB" secondAttribute="trailing" constant="102" id="2C6-DN-sQg"/>
-                            <constraint firstItem="Gnw-fW-NNI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8mj-C5-gjt"/>
+                            <constraint firstItem="KTO-a2-2Ny" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="7" id="4Ym-Na-1ax"/>
                             <constraint firstItem="MwW-BC-0Q1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="9Bf-Oe-SqR"/>
                             <constraint firstItem="0eQ-VN-G2r" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9Hy-oR-8rQ"/>
+                            <constraint firstItem="gpg-PX-vlZ" firstAttribute="top" secondItem="KTO-a2-2Ny" secondAttribute="bottom" constant="65" id="9RV-W3-tzM"/>
                             <constraint firstItem="MwW-BC-0Q1" firstAttribute="top" secondItem="emF-vp-pYB" secondAttribute="bottom" constant="30" id="9al-IH-osM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="emF-vp-pYB" secondAttribute="trailing" constant="54" id="Bk7-XN-Ubg"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="Doi-9T-Ej5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2wN-Lh-PqW" secondAttribute="trailing" constant="-20" id="Duh-Sx-Xvn"/>
                             <constraint firstItem="MwW-BC-0Q1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Eo1-fy-YMa"/>
                             <constraint firstItem="emF-vp-pYB" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="EzY-JU-Bhn"/>
                             <constraint firstItem="emF-vp-pYB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HqN-0m-988"/>
                             <constraint firstItem="emF-vp-pYB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="101" id="K7U-aU-GHN"/>
                             <constraint firstItem="0eQ-VN-G2r" firstAttribute="top" secondItem="MwW-BC-0Q1" secondAttribute="bottom" constant="18" id="QRs-gG-C6n"/>
-                            <constraint firstItem="Gnw-fW-NNI" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="63" id="V5i-cR-ZnE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0eQ-VN-G2r" secondAttribute="trailing" constant="20" id="XHb-0Q-9Ks"/>
                             <constraint firstItem="emF-vp-pYB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Yhu-Px-iJN"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="centerX" secondItem="MwW-BC-0Q1" secondAttribute="centerX" id="aCF-bf-CLL"/>
+                            <constraint firstItem="gpg-PX-vlZ" firstAttribute="top" secondItem="2wN-Lh-PqW" secondAttribute="bottom" constant="37" id="bA6-V0-E0f"/>
+                            <constraint firstItem="2wN-Lh-PqW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="dUW-3h-QLA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MwW-BC-0Q1" secondAttribute="trailing" constant="16" id="eBl-2o-h5i"/>
                             <constraint firstItem="0eQ-VN-G2r" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="exf-w3-UOm"/>
                             <constraint firstItem="MwW-BC-0Q1" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="81.5" id="i5z-HV-8IG"/>
-                            <constraint firstItem="Gnw-fW-NNI" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="1:2" id="nHY-nA-epg"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0eQ-VN-G2r" secondAttribute="bottom" constant="20" id="o2L-nm-CoF"/>
-                            <constraint firstItem="gpg-PX-vlZ" firstAttribute="top" secondItem="Gnw-fW-NNI" secondAttribute="bottom" constant="59" id="oBQ-fE-arP"/>
+                            <constraint firstItem="2wN-Lh-PqW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="sw8-XL-tJt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KTO-a2-2Ny" secondAttribute="trailing" constant="73" id="uKM-EN-m5W"/>
                             <constraint firstItem="MwW-BC-0Q1" firstAttribute="top" secondItem="emF-vp-pYB" secondAttribute="bottom" constant="10" id="uWq-R9-lD2"/>
                             <constraint firstItem="emF-vp-pYB" firstAttribute="top" secondItem="gpg-PX-vlZ" secondAttribute="bottom" constant="8" id="wW6-RC-tNM"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="oBQ-fE-arP"/>
                                 <exclude reference="2C6-DN-sQg"/>
                                 <exclude reference="Bk7-XN-Ubg"/>
                                 <exclude reference="HqN-0m-988"/>
@@ -152,6 +151,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="imgBackground" destination="2wN-Lh-PqW" id="g2L-iz-Ovz"/>
                         <outlet property="imgPortadaLibro" destination="KTO-a2-2Ny" id="sUG-wq-78U"/>
                         <outlet property="lblAutors" destination="Ivm-pN-Jwa" id="Gvd-xw-Pge"/>
                         <outlet property="lblTituloLibro" destination="gpg-PX-vlZ" id="W4Y-XR-114"/>
@@ -161,7 +161,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="310.5" y="439.5"/>
+            <point key="canvasLocation" x="244.5" y="415.5"/>
         </scene>
     </scenes>
     <resources>
