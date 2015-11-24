@@ -13,6 +13,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var txtField: UITextField!
     @IBOutlet weak var txtViewResponse: UITextView!
     @IBOutlet weak var lblTituloLibro: UILabel!
+    @IBOutlet weak var lblAutors: UILabel!
+    @IBOutlet weak var imgPortadaLibro: UIImageView!
     
     // Establecemos la dirección del servidor
     var urls = "https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:"
@@ -52,6 +54,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 let objJson = json as! NSDictionary
                 let diccionarioISBN = objJson["ISBN:\(self.txtField.text!)"]                
                 self.lblTituloLibro.text = diccionarioISBN!["title"] as! NSString as String
+                
+                // Obtenemos el autor o autores
+                let autores = diccionarioISBN!["authors"] as! [[String : String]]
+                self.lblAutors.text = autores[0]["name"]
+                
+                // Obtenemos el url de la imagen de portada y se lo pasamos a el UIImage
+                let covers = diccionarioISBN!["cover"] as! NSDictionary
+                
+                let urlImg = NSURL(string: covers["large"] as! NSString as String)
+                let data = NSData(contentsOfURL: urlImg!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+                self.imgPortadaLibro.image = UIImage(data: data!)
+                
+                
                 
             } catch _ {
                 
