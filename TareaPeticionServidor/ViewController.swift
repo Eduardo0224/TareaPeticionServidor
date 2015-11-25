@@ -85,7 +85,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 
                 // Obtenemos el autor o autores
                 let autores = diccionarioISBN!["authors"] as! [[String : String]]
-                self.lblAutors.text = autores[0]["name"]
+                self.lblAutors.text = "por \(autores[0]["name"]!)"
+                print(self.lblAutors.text)
+                
+                // Código nuevo para colocar diferentes colores en un mismo label
+                let text: NSMutableAttributedString = NSMutableAttributedString(attributedString: self.lblAutors.attributedText!)
+                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, 3))
+                self.lblAutors.attributedText = text
+                // ------------
                 
                 // Obtenemos el url de la imagen de portada y se lo pasamos a el UIImage
                 let covers = diccionarioISBN!["cover"] as! NSDictionary

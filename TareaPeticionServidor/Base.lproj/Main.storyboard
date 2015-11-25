@@ -46,47 +46,21 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="emF-vp-pYB">
-                                <rect key="frame" x="38" y="355" width="300" height="35"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="por" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M0q-U0-goC" userLabel="Por">
-                                        <rect key="frame" x="0.0" y="8" width="106" height="19"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="TzX-cW-8Oe"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="16"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="TzX-cW-8Oe"/>
-                                            </mask>
-                                        </variation>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Autor del libro" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Ivm-pN-Jwa" userLabel="Autor">
-                                        <rect key="frame" x="111" y="0.0" width="190" height="35"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="hXz-dj-Opc"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="16"/>
-                                        <color key="textColor" red="1" green="0.96782196490000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="hXz-dj-Opc"/>
-                                            </mask>
-                                        </variation>
-                                    </label>
-                                </subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Autor del libro" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Ivm-pN-Jwa" userLabel="Autor">
+                                <rect key="frame" x="93.5" y="349" width="187.5" height="35"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="Gwa-yV-VkG"/>
-                                    <constraint firstItem="Ivm-pN-Jwa" firstAttribute="height" secondItem="emF-vp-pYB" secondAttribute="height" id="jeK-Ly-HsM"/>
-                                    <constraint firstItem="Ivm-pN-Jwa" firstAttribute="width" secondItem="M0q-U0-goC" secondAttribute="width" multiplier="1.8" id="uAK-JJ-HlG"/>
+                                    <constraint firstAttribute="height" constant="32" id="hXz-dj-Opc"/>
                                 </constraints>
-                            </stackView>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="16"/>
+                                <color key="textColor" red="1" green="0.96782196490000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="hXz-dj-Opc"/>
+                                    </mask>
+                                </variation>
+                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ingrese el ISBN, ej. 978-84-376-0494-7" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="MwW-BC-0Q1">
                                 <rect key="frame" x="32" y="400" width="311" height="30"/>
                                 <animations/>
@@ -110,22 +84,19 @@
                         <color key="backgroundColor" red="0.28674227000000002" green="0.3699073792" blue="0.5429201722" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="KTO-a2-2Ny" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="74" id="0py-Ae-otH"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="emF-vp-pYB" secondAttribute="trailing" constant="102" id="2C6-DN-sQg"/>
                             <constraint firstItem="KTO-a2-2Ny" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="7" id="4Ym-Na-1ax"/>
                             <constraint firstItem="MwW-BC-0Q1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="9Bf-Oe-SqR"/>
                             <constraint firstItem="0eQ-VN-G2r" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9Hy-oR-8rQ"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="top" secondItem="KTO-a2-2Ny" secondAttribute="bottom" constant="65" id="9RV-W3-tzM"/>
-                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="top" secondItem="emF-vp-pYB" secondAttribute="bottom" constant="30" id="9al-IH-osM"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="emF-vp-pYB" secondAttribute="trailing" constant="54" id="Bk7-XN-Ubg"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="Doi-9T-Ej5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2wN-Lh-PqW" secondAttribute="trailing" constant="-20" id="Duh-Sx-Xvn"/>
                             <constraint firstItem="MwW-BC-0Q1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Eo1-fy-YMa"/>
-                            <constraint firstItem="emF-vp-pYB" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="EzY-JU-Bhn"/>
-                            <constraint firstItem="emF-vp-pYB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HqN-0m-988"/>
-                            <constraint firstItem="emF-vp-pYB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="101" id="K7U-aU-GHN"/>
+                            <constraint firstItem="Ivm-pN-Jwa" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="1:2" id="ORH-ol-qcd"/>
                             <constraint firstItem="0eQ-VN-G2r" firstAttribute="top" secondItem="MwW-BC-0Q1" secondAttribute="bottom" constant="18" id="QRs-gG-C6n"/>
+                            <constraint firstItem="Ivm-pN-Jwa" firstAttribute="centerX" secondItem="gpg-PX-vlZ" secondAttribute="centerX" id="SSi-0H-hMq"/>
+                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="top" secondItem="Ivm-pN-Jwa" secondAttribute="bottom" constant="16" id="Smq-vv-Ief"/>
+                            <constraint firstItem="Ivm-pN-Jwa" firstAttribute="top" secondItem="gpg-PX-vlZ" secondAttribute="bottom" constant="2" id="W0J-eH-5NG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0eQ-VN-G2r" secondAttribute="trailing" constant="20" id="XHb-0Q-9Ks"/>
-                            <constraint firstItem="emF-vp-pYB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Yhu-Px-iJN"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="centerX" secondItem="MwW-BC-0Q1" secondAttribute="centerX" id="aCF-bf-CLL"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="top" secondItem="2wN-Lh-PqW" secondAttribute="bottom" constant="37" id="bA6-V0-E0f"/>
                             <constraint firstItem="2wN-Lh-PqW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="dUW-3h-QLA"/>
@@ -135,18 +106,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0eQ-VN-G2r" secondAttribute="bottom" constant="20" id="o2L-nm-CoF"/>
                             <constraint firstItem="2wN-Lh-PqW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="sw8-XL-tJt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KTO-a2-2Ny" secondAttribute="trailing" constant="73" id="uKM-EN-m5W"/>
-                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="top" secondItem="emF-vp-pYB" secondAttribute="bottom" constant="10" id="uWq-R9-lD2"/>
-                            <constraint firstItem="emF-vp-pYB" firstAttribute="top" secondItem="gpg-PX-vlZ" secondAttribute="bottom" constant="8" id="wW6-RC-tNM"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="2C6-DN-sQg"/>
-                                <exclude reference="Bk7-XN-Ubg"/>
-                                <exclude reference="HqN-0m-988"/>
-                                <exclude reference="K7U-aU-GHN"/>
-                                <exclude reference="9al-IH-osM"/>
-                            </mask>
-                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
