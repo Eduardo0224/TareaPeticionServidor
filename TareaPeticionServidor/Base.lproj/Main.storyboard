@@ -18,12 +18,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_isbn.png" translatesAutoresizingMaskIntoConstraints="NO" id="2wN-Lh-PqW" userLabel="ImgBackground">
+                            <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2wN-Lh-PqW" userLabel="ImgBackground">
                                 <rect key="frame" x="-4" y="0.0" width="383" height="278"/>
                                 <animations/>
-                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_isbn.png" translatesAutoresizingMaskIntoConstraints="NO" id="KTO-a2-2Ny">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KTO-a2-2Ny">
                                 <rect key="frame" x="90" y="27" width="196" height="223"/>
                                 <animations/>
                                 <constraints>
@@ -123,7 +122,4 @@
             <point key="canvasLocation" x="244.5" y="415.5"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="logo_isbn.png" width="96" height="96"/>
-    </resources>
 </document>

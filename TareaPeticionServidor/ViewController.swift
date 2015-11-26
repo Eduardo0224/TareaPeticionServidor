@@ -56,11 +56,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.txtField.resignFirstResponder()
         print("Se presiono el botón de Search")
-        sincrono()
+        obtenerInformacion()
         return true
     }
     
-    func sincrono () {
+    func obtenerInformacion () {
         // El cliente ha de esperar la respuesta del servidor para poder ejecutar otra acción
         urls = urls + "\(txtField.text!)"
        
@@ -121,12 +121,21 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
         }
         
+        // MARK: Creamos un spinner para dar feedback al usuario que se esta cargando la imagen de portada
+        let spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        spinner.center = CGPointMake(self.imgPortadaLibro.frame.width / 2.0, self.imgPortadaLibro.frame.height / 2.0)
+        self.imgPortadaLibro.addSubview(spinner)
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
+        
         // ---
         // se crea una sesión compartida
         let sesion = NSURLSession.sharedSession()
         
         // El bloque es el procesameinto y la respuesta de la petición
         let bloque = { (datos: NSData?, resp: NSURLResponse?, error: NSError?) -> Void in
+            
+           
             
             let dataImg = NSData(contentsOfURL: self.urlImg!)
             
@@ -137,6 +146,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 dispatch_async(dispatch_get_main_queue(), {
                     self.imgBackground.image = imagenLista
                     self.imgPortadaLibro.image = self.imageWithBorderFromImage(imagenLista!)
+                    spinner.stopAnimating()
+                    spinner.removeFromSuperview()
+                    
 
                     });
             }
