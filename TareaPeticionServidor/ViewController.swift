@@ -127,9 +127,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         // El bloque es el procesameinto y la respuesta de la petición
         let bloque = { (datos: NSData?, resp: NSURLResponse?, error: NSError?) -> Void in
+            
             let dataImg = NSData(contentsOfURL: self.urlImg!)
-            self.imgBackground.image = UIImage(data: dataImg!)
-            self.imgPortadaLibro.image = self.imageWithBorderFromImage(UIImage(data: dataImg!)!)
+            
+            let imagenLista = UIImage(data: dataImg!)
+            
+            // MARK: Esto se usa para pasar el proceso de asignar la imagen descargado de la web, al hilo principal, todo lo relacionado con UIKit debe ir en el hilo principal
+            if ((imagenLista) != nil) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.imgBackground.image = imagenLista
+                    self.imgPortadaLibro.image = self.imageWithBorderFromImage(imagenLista!)
+
+                    });
+            }
             
         }
         // Creamos una tarea para la sesión con una llamada Callback
