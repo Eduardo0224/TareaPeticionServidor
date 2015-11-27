@@ -19,6 +19,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     var urlImg : NSURL?
     
+    var iPhone: Bool {
+        return UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone
+    }
+    
+    var iPad: Bool {
+        return UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+    }
+    
     // Establecemos la dirección del servidor
     var urls = "https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:"
     
@@ -41,6 +49,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         lblTituloLibro.shadowColor = UIColor.blackColor()
         lblTituloLibro.shadowOffset = CGSize(width: 0, height: 1)
+        
+
     }
     
     func imageWithBorderFromImage(source: UIImage) -> UIImage {
@@ -50,7 +60,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
         source.drawInRect(rect, blendMode: .Darken, alpha: 1.0)
         let context: CGContextRef = UIGraphicsGetCurrentContext()!
         CGContextSetRGBStrokeColor(context, 255, 255, 255, 1.0)
-        CGContextStrokeRectWithWidth(context, rect, 10.0)
+        
+        if Device.IS_3_5_INCHES() || Device.IS_4_INCHES() {
+            CGContextStrokeRectWithWidth(context, rect, 4.5)
+        }
+        else {
+            CGContextStrokeRectWithWidth(context, rect, 10.0)
+        }
+        
         let testImg: UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return testImg
@@ -62,6 +79,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         obtenerInformacion()
         return true
     }
+
     
     func obtenerInformacion () {
         // El cliente ha de esperar la respuesta del servidor para poder ejecutar otra acción
@@ -69,7 +87,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
        
         // la convertimos en URL a través de la clase NSURL
         let url = NSURL(string: urls)
-
         
         do {
             // Hacemos la petición a trevés de la clase NSData (petición que va a esperar hasta recibir respuesta del servidor)
@@ -79,35 +96,74 @@ class ViewController: UIViewController, UITextFieldDelegate {
             // Como puede que lo que traiga no este en formato json, debemos hacer un do, catch
             do {
                 // va a ser el resultado de los datos obtenidos los que vamos a analizar
-                let json = try NSJSONSerialization.JSONObjectWithData(datos!, options: .MutableLeaves)                
+                let json = try NSJSONSerialization.JSONObjectWithData(datos!, options: .MutableLeaves)
                 
                 // Voy a hacer un recorrido por el diccionario (que es todo el json), e ir filtrando entre atributos
                 let objJson = json as! NSDictionary
-                let diccionarioISBN = objJson["ISBN:\(self.txtField.text!)"]                
-                self.lblTituloLibro.text = diccionarioISBN!["title"] as! NSString as String
+                let diccionarioISBN = objJson["ISBN:\(self.txtField.text!)"]
+                
+                
+                
+                let tituloListo : String? = diccionarioISBN!["title"] as! NSString as String
+                if tituloListo != nil {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.lblTituloLibro.text = tituloListo
+                        
+                    });
+                }
                 
                 // Obtenemos el autor o autores
                 let autores = diccionarioISBN!["authors"] as! [[String : String]]
-                self.lblAutors.text = "por \(autores[0]["name"]!)"
-                print(self.lblAutors.text)
                 
-                // Código nuevo para colocar diferentes colores en un mismo label
-                let text: NSMutableAttributedString = NSMutableAttributedString(attributedString: self.lblAutors.attributedText!)
-                text.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, 3))
-                self.lblAutors.attributedText = text
-                // ------------
+                let autoresListos : String? = "por \(autores[0]["name"]!)"
+                if autoresListos != nil {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.lblAutors.text = autoresListos
+                        
+                        // Código nuevo para colocar diferentes colores en un mismo label
+                        let text: NSMutableAttributedString = NSMutableAttributedString(attributedString: self.lblAutors.attributedText!)
+                        text.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, 3))
+                        self.lblAutors.attributedText = text
+                        // ------------
+                        
+                    });
+                }
                 
                 // Obtenemos el url de la imagen de portada y se lo pasamos a el UIImage
                 let covers = diccionarioISBN!["cover"] as! NSDictionary
                 
-                urlImg = NSURL(string: covers["large"] as! NSString as String)
                 
                 
-            
+                if iPhone {
+                    if Device.IS_3_5_INCHES() {
+                        self.urlImg = NSURL(string: covers["small"] as! NSString as String)
+                        print("3.5 inches")
+                    }
+                    else if Device.IS_4_INCHES() {
+                        self.urlImg = NSURL(string: covers["medium"] as! NSString as String)
+                        print("4 inches")
+                    }
+                    else if Device.IS_4_7_INCHES() {
+                        self.urlImg = NSURL(string: covers["medium"] as! NSString as String)
+                        print("4.7 inches")
+                    }
+                    else if Device.IS_5_5_INCHES() {
+                        self.urlImg = NSURL(string: covers["large"] as! NSString as String)
+                        print("5.5 inches")
+                    }
+                } else if iPad {
+                    self.urlImg = NSURL(string: covers["large"] as! NSString as String)
+                    print("iPad")
+                }
+                
+               
+                
+                
+                
             } catch _ {
                 
             }
-
+            
             
             // Los datos obtenidos los codificamos a UTF8
             let texto = NSString(data: datos!, encoding: NSUTF8StringEncoding)
@@ -123,6 +179,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             self.presentViewController(alert, animated: true, completion: nil)
             
         }
+
         
         // MARK: Creamos un spinner para dar feedback al usuario que se esta cargando la imagen de portada
         let spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
@@ -137,8 +194,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         // El bloque es el procesameinto y la respuesta de la petición
         let bloque = { (datos: NSData?, resp: NSURLResponse?, error: NSError?) -> Void in
-            
-           
+            // Imagen ----------------
             
             let dataImg = NSData(contentsOfURL: self.urlImg!)
             

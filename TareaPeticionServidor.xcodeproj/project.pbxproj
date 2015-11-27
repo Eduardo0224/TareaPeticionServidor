@@ -15,6 +15,7 @@
 		B23D0A4C1BFC05EB007CFF3C /* TareaPeticionServidorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D0A4B1BFC05EB007CFF3C /* TareaPeticionServidorTests.swift */; };
 		B23D0A571BFC05EC007CFF3C /* TareaPeticionServidorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D0A561BFC05EC007CFF3C /* TareaPeticionServidorUITests.swift */; };
 		B23D0A671BFC2400007CFF3C /* logo_isbn.png in Resources */ = {isa = PBXBuildFile; fileRef = B23D0A661BFC2400007CFF3C /* logo_isbn.png */; };
+		B2EA66A01C0904A500EEB709 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EA669F1C0904A500EEB709 /* Device.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		B23D0A561BFC05EC007CFF3C /* TareaPeticionServidorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TareaPeticionServidorUITests.swift; sourceTree = "<group>"; };
 		B23D0A581BFC05EC007CFF3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B23D0A661BFC2400007CFF3C /* logo_isbn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_isbn.png; sourceTree = "<group>"; };
+		B2EA669F1C0904A500EEB709 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		B23D0A351BFC05EB007CFF3C /* TareaPeticionServidor */ = {
 			isa = PBXGroup;
 			children = (
+				B2EA669F1C0904A500EEB709 /* Device.swift */,
 				B23D0A661BFC2400007CFF3C /* logo_isbn.png */,
 				B23D0A361BFC05EB007CFF3C /* AppDelegate.swift */,
 				B23D0A381BFC05EB007CFF3C /* ViewController.swift */,
@@ -260,6 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2EA66A01C0904A500EEB709 /* Device.swift in Sources */,
 				B23D0A391BFC05EB007CFF3C /* ViewController.swift in Sources */,
 				B23D0A371BFC05EB007CFF3C /* AppDelegate.swift in Sources */,
 			);
