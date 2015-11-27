@@ -38,6 +38,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         
         imgBackground.addSubview(blurEffectView)
+        
+        lblTituloLibro.shadowColor = UIColor.blackColor()
+        lblTituloLibro.shadowOffset = CGSize(width: 0, height: 1)
     }
     
     func imageWithBorderFromImage(source: UIImage) -> UIImage {
