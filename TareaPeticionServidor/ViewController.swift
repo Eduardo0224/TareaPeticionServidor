@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  TareaPeticionServidor
 //
-//  Created by Eduardo on 17/11/15.
+//  Created by Eduardo Andrade based on the code of Osvaldo Aaron Marquez Espinoza on 07/12/15.
 //  Copyright © 2015 EduardoAndrade. All rights reserved.
 //
 
@@ -76,110 +76,20 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.txtField.resignFirstResponder()
         print("Se presiono el botón de Search")
-        obtenerInformacion()
+        if textField.text != "" {
+            obtenerInformacion(txtField.text!)
+        }
+        else {
+            alert("Debe ingresar un ISBN")
+        }
         return true
     }
-
     
-    func obtenerInformacion () {
-        // El cliente ha de esperar la respuesta del servidor para poder ejecutar otra acción
-        urls = urls + "\(txtField.text!)"
-       
-        // la convertimos en URL a través de la clase NSURL
-        let url = NSURL(string: urls)
-        
-        do {
-            // Hacemos la petición a trevés de la clase NSData (petición que va a esperar hasta recibir respuesta del servidor)
-            let datos : NSData? = try NSData(contentsOfURL: url!, options: [])
-            
-            // MARK: Analisis del JSON
-            // Como puede que lo que traiga no este en formato json, debemos hacer un do, catch
-            do {
-                // va a ser el resultado de los datos obtenidos los que vamos a analizar
-                let json = try NSJSONSerialization.JSONObjectWithData(datos!, options: .MutableLeaves)
-                
-                // Voy a hacer un recorrido por el diccionario (que es todo el json), e ir filtrando entre atributos
-                let objJson = json as! NSDictionary
-                let diccionarioISBN = objJson["ISBN:\(self.txtField.text!)"]
-                
-                
-                
-                let tituloListo : String? = diccionarioISBN!["title"] as! NSString as String
-                if tituloListo != nil {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.lblTituloLibro.text = tituloListo
-                        
-                    });
-                }
-                
-                // Obtenemos el autor o autores
-                let autores = diccionarioISBN!["authors"] as! [[String : String]]
-                
-                let autoresListos : String? = "por \(autores[0]["name"]!)"
-                if autoresListos != nil {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.lblAutors.text = autoresListos
-                        
-                        // Código nuevo para colocar diferentes colores en un mismo label
-                        let text: NSMutableAttributedString = NSMutableAttributedString(attributedString: self.lblAutors.attributedText!)
-                        text.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, 3))
-                        self.lblAutors.attributedText = text
-                        // ------------
-                        
-                    });
-                }
-                
-                // Obtenemos el url de la imagen de portada y se lo pasamos a el UIImage
-                let covers = diccionarioISBN!["cover"] as! NSDictionary
-                
-                
-                
-                if iPhone {
-                    if Device.IS_3_5_INCHES() {
-                        self.urlImg = NSURL(string: covers["small"] as! NSString as String)
-                        print("3.5 inches")
-                    }
-                    else if Device.IS_4_INCHES() {
-                        self.urlImg = NSURL(string: covers["medium"] as! NSString as String)
-                        print("4 inches")
-                    }
-                    else if Device.IS_4_7_INCHES() {
-                        self.urlImg = NSURL(string: covers["medium"] as! NSString as String)
-                        print("4.7 inches")
-                    }
-                    else if Device.IS_5_5_INCHES() {
-                        self.urlImg = NSURL(string: covers["large"] as! NSString as String)
-                        print("5.5 inches")
-                    }
-                } else if iPad {
-                    self.urlImg = NSURL(string: covers["large"] as! NSString as String)
-                    print("iPad")
-                }
-                
-               
-                
-                
-                
-            } catch _ {
-                
-            }
-            
-            
-            // Los datos obtenidos los codificamos a UTF8
-            let texto = NSString(data: datos!, encoding: NSUTF8StringEncoding)
-            // finalmente imprimimos en consola
-            self.txtViewResponse.text = texto! as String
-            self.txtViewResponse.textColor = UIColor.whiteColor()
-            self.txtViewResponse.font = UIFont(name: "Trebuchet MS", size: 14.0)
-        } catch {
-            print("Hubo un error:")
-            let alert = UIAlertController(title: "Error en la conexión", message: "Debido a un error en la comunicación no se pudo conectar, intentelo de nuevo.", preferredStyle: .Alert)
-            let OKAction = UIAlertAction(title: "OK", style: .Cancel) { (action) in }
-            alert.addAction(OKAction)
-            self.presentViewController(alert, animated: true, completion: nil)
-            
-        }
-
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func obtenerInformacion(isbnText: String){
         
         // MARK: Creamos un spinner para dar feedback al usuario que se esta cargando la imagen de portada
         let spinner = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
@@ -188,39 +98,128 @@ class ViewController: UIViewController, UITextFieldDelegate {
         spinner.startAnimating()
         spinner.hidesWhenStopped = true
         
-        // ---
-        // se crea una sesión compartida
-        let sesion = NSURLSession.sharedSession()
-        
-        // El bloque es el procesameinto y la respuesta de la petición
-        let bloque = { (datos: NSData?, resp: NSURLResponse?, error: NSError?) -> Void in
-            // Imagen ----------------
+        let apiUrl = "https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:\(isbnText)"
+        let url = NSURL(string: apiUrl)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithURL(url!, completionHandler: {
+            (data, response, error) -> Void in
             
-            let dataImg = NSData(contentsOfURL: self.urlImg!)
-            
-            let imagenLista = UIImage(data: dataImg!)
-            
-            // MARK: Esto se usa para pasar el proceso de asignar la imagen descargado de la web, al hilo principal, todo lo relacionado con UIKit debe ir en el hilo principal
-            if ((imagenLista) != nil) {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.imgBackground.image = imagenLista
-                    self.imgPortadaLibro.image = self.imageWithBorderFromImage(imagenLista!)
+            dispatch_async(dispatch_get_main_queue(), {
+                if((response) != nil){
+                    
+                    // Los datos obtenidos los codificamos a UTF8
+                    let texto = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
+
+                    self.txtViewResponse.text = texto as String
+                    self.txtViewResponse.textColor = UIColor.whiteColor()
+                    self.txtViewResponse.font = UIFont(name: "Trebuchet MS", size: 14.0)
+                    
+                    if texto.containsString(isbnText) {
+                        
+                        
+                        do{
+                            let jsonDatos = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                            let keyJsonData : String = "ISBN:" + isbnText
+                            
+                            
+                            if let datos = jsonDatos[keyJsonData] as? NSDictionary{
+                                
+                                if let nombreTitulo = datos["title"] as? String{
+                                    self.lblTituloLibro.text = nombreTitulo
+                                }
+                                
+                                if let autores = datos["authors"] as? NSArray{
+                                    self.lblAutors.text = "Por "
+                                    var index: Int = 0
+                                    for nombreAutor in autores {
+                                        if index == autores.count - 1 {
+                                            self.lblAutors.text = self.lblAutors.text! + (nombreAutor["name"] as! String)
+                                        }else{
+                                            self.lblAutors.text = self.lblAutors.text! + (nombreAutor["name"] as! String) + ", "
+                                        }
+                                        ++index
+                                    }
+                                    
+                                    // Código nuevo para colocar diferentes colores en un mismo label
+                                    let text: NSMutableAttributedString = NSMutableAttributedString(attributedString: self.lblAutors.attributedText!)
+                                    text.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, 3))
+                                    self.lblAutors.attributedText = text
+                                    // ------------
+
+                                }
+                                
+                                if let _ = datos["cover"] as? NSDictionary{
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        
+                                        // Obtenemos el url de la imagen de portada y se lo pasamos a el UIImage
+                                        let cover = datos["cover"]
+                                        if cover != nil && cover is NSDictionary {
+                                            let covers = datos["cover"] as! NSDictionary
+                                            
+                                            if self.iPhone {
+                                                if Device.IS_3_5_INCHES() {
+                                                    self.urlImg = NSURL(string: covers["small"] as! NSString as String)
+                                                    print("3.5 inches")
+                                                }
+                                                else if Device.IS_4_INCHES() {
+                                                    self.urlImg = NSURL(string: covers["medium"] as! NSString as String)
+                                                    print("4 inches")
+                                                }
+                                                else if Device.IS_4_7_INCHES() {
+                                                    self.urlImg = NSURL(string: covers["medium"] as! NSString as String)
+                                                    print("4.7 inches")
+                                                }
+                                                else if Device.IS_5_5_INCHES() {
+                                                    self.urlImg = NSURL(string: covers["large"] as! NSString as String)
+                                                    print("5.5 inches")
+                                                }
+                                            } else if self.iPad {
+                                                self.urlImg = NSURL(string: covers["large"] as! NSString as String)
+                                                print("iPad")
+                                            }
+                                        }
+
+
+                                        let data = NSData(contentsOfURL: self.urlImg!)
+                                        self.imgPortadaLibro.image = UIImage(data: data!)
+                                        
+                                        self.imgBackground.image = UIImage(data: data!)
+                                        self.imgPortadaLibro.image = self.imageWithBorderFromImage(UIImage(data: data!)!)
+                                        spinner.stopAnimating()
+                                        spinner.removeFromSuperview()
+
+                                    })
+                                }
+                            }
+                        }catch _ {
+                            
+                        }
+                        
+                    }else{
+                        self.alert("No se encontro información, con el ISBN introducido")
+                        spinner.stopAnimating()
+                        spinner.removeFromSuperview()
+                    }
+                    
+                }else{
+                    self.alert("Error al conectar, compruebe su conexión a internet")
                     spinner.stopAnimating()
                     spinner.removeFromSuperview()
-                    
-
-                    });
-            }
-            
-        }
-        // Creamos una tarea para la sesión con una llamada Callback
-        let dataTask = sesion.dataTaskWithURL(urlImg!, completionHandler: bloque)
-        // se empieza la ejecución de la tarea con el método resume
-        dataTask.resume()
-        // ---
-
-
+                }
+            })
+        })
         
+        task.resume()
     }
+    
+    func alert(message : String){
+        let alertController = UIAlertController(title: "Error al conectar", message: message, preferredStyle: .Alert)
+        let ok = UIAlertAction(title: "Ok", style: .Default, handler: nil)
+        alertController.addAction(ok)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+
+    
+    
 }
 
