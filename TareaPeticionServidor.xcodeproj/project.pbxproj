@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B21BE3AD1C15BC1400F024D3 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21BE3AC1C15BC1400F024D3 /* TableViewController.swift */; };
 		B23D0A371BFC05EB007CFF3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D0A361BFC05EB007CFF3C /* AppDelegate.swift */; };
 		B23D0A391BFC05EB007CFF3C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D0A381BFC05EB007CFF3C /* ViewController.swift */; };
 		B23D0A3C1BFC05EB007CFF3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B23D0A3A1BFC05EB007CFF3C /* Main.storyboard */; };
@@ -14,6 +15,7 @@
 		B23D0A411BFC05EB007CFF3C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B23D0A3F1BFC05EB007CFF3C /* LaunchScreen.storyboard */; };
 		B23D0A4C1BFC05EB007CFF3C /* TareaPeticionServidorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D0A4B1BFC05EB007CFF3C /* TareaPeticionServidorTests.swift */; };
 		B23D0A571BFC05EC007CFF3C /* TareaPeticionServidorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D0A561BFC05EC007CFF3C /* TareaPeticionServidorUITests.swift */; };
+		B27376A31C18DB8800BEC420 /* logo-navbar.png in Resources */ = {isa = PBXBuildFile; fileRef = B27376A21C18DB8800BEC420 /* logo-navbar.png */; };
 		B2EA66A01C0904A500EEB709 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EA669F1C0904A500EEB709 /* Device.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B21BE3AC1C15BC1400F024D3 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		B23D0A331BFC05EB007CFF3C /* TareaPeticionServidor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TareaPeticionServidor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B23D0A361BFC05EB007CFF3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B23D0A381BFC05EB007CFF3C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -48,7 +51,8 @@
 		B23D0A521BFC05EC007CFF3C /* TareaPeticionServidorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TareaPeticionServidorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B23D0A561BFC05EC007CFF3C /* TareaPeticionServidorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TareaPeticionServidorUITests.swift; sourceTree = "<group>"; };
 		B23D0A581BFC05EC007CFF3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B2EA669F1C0904A500EEB709 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		B27376A21C18DB8800BEC420 /* logo-navbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-navbar.png"; sourceTree = "<group>"; };
+		B2EA669F1C0904A500EEB709 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Device.swift; path = TareaPeticionServidor/Device.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,9 +80,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B21BE3A91C15B9FC00F024D3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B2EA669F1C0904A500EEB709 /* Device.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		B21BE3AA1C15BA1200F024D3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B23D0A361BFC05EB007CFF3C /* AppDelegate.swift */,
+				B23D0A381BFC05EB007CFF3C /* ViewController.swift */,
+				B21BE3AC1C15BC1400F024D3 /* TableViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		B21BE3AB1C15BA1D00F024D3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B23D0A3A1BFC05EB007CFF3C /* Main.storyboard */,
+				B23D0A3F1BFC05EB007CFF3C /* LaunchScreen.storyboard */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		B23D0A2A1BFC05EB007CFF3C = {
 			isa = PBXGroup;
 			children = (
+				B27376A21C18DB8800BEC420 /* logo-navbar.png */,
+				B21BE3A91C15B9FC00F024D3 /* Utils */,
 				B23D0A351BFC05EB007CFF3C /* TareaPeticionServidor */,
 				B23D0A4A1BFC05EB007CFF3C /* TareaPeticionServidorTests */,
 				B23D0A551BFC05EC007CFF3C /* TareaPeticionServidorUITests */,
@@ -99,12 +132,9 @@
 		B23D0A351BFC05EB007CFF3C /* TareaPeticionServidor */ = {
 			isa = PBXGroup;
 			children = (
-				B2EA669F1C0904A500EEB709 /* Device.swift */,
-				B23D0A361BFC05EB007CFF3C /* AppDelegate.swift */,
-				B23D0A381BFC05EB007CFF3C /* ViewController.swift */,
-				B23D0A3A1BFC05EB007CFF3C /* Main.storyboard */,
+				B21BE3AB1C15BA1D00F024D3 /* Views */,
+				B21BE3AA1C15BA1200F024D3 /* Controllers */,
 				B23D0A3D1BFC05EB007CFF3C /* Assets.xcassets */,
-				B23D0A3F1BFC05EB007CFF3C /* LaunchScreen.storyboard */,
 				B23D0A421BFC05EB007CFF3C /* Info.plist */,
 			);
 			path = TareaPeticionServidor;
@@ -234,6 +264,7 @@
 			files = (
 				B23D0A411BFC05EB007CFF3C /* LaunchScreen.storyboard in Resources */,
 				B23D0A3E1BFC05EB007CFF3C /* Assets.xcassets in Resources */,
+				B27376A31C18DB8800BEC420 /* logo-navbar.png in Resources */,
 				B23D0A3C1BFC05EB007CFF3C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +293,7 @@
 				B2EA66A01C0904A500EEB709 /* Device.swift in Sources */,
 				B23D0A391BFC05EB007CFF3C /* ViewController.swift in Sources */,
 				B23D0A371BFC05EB007CFF3C /* AppDelegate.swift in Sources */,
+				B21BE3AD1C15BC1400F024D3 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

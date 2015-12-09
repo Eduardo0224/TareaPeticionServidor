@@ -8,14 +8,20 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate {
 
     @IBOutlet weak var txtField: UITextField!
-    @IBOutlet weak var txtViewResponse: UITextView!
     @IBOutlet weak var lblTituloLibro: UILabel!
     @IBOutlet weak var lblAutors: UILabel!
     @IBOutlet weak var imgPortadaLibro: UIImageView!
     @IBOutlet weak var imgBackground: UIImageView!
+    
+    
+    // MARK: UISearchBar
+    var searchBar = UISearchBar()
+    var searchBarButtonItem: UIBarButtonItem?
+    var logoImageView   : UIImageView!
+
     
     var urlImg : NSURL?
     
@@ -51,7 +57,71 @@ class ViewController: UIViewController, UITextFieldDelegate {
         lblTituloLibro.shadowOffset = CGSize(width: 0, height: 1)
         
 
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController!.navigationBar.translucent = true
+        self.navigationController!.view.backgroundColor = UIColor.clearColor()
+
+        let rightSearchBarButtonItem : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: Selector("showSearchBar"))
+        rightSearchBarButtonItem.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationItem.setRightBarButtonItem(rightSearchBarButtonItem, animated: true)
+
+        
+        // MARK: Aquí todo lo de el searchBar
+        // Can replace logoImageView for titleLabel of navbar
+        let logoImage = UIImage()
+        logoImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: logoImage.size.width, height: logoImage.size.height))
+        logoImageView.image = logoImage
+        navigationItem.titleView = logoImageView
+        
+        searchBar.delegate = self
+        searchBar.showsCancelButton = true
+        searchBar.searchBarStyle = UISearchBarStyle.Minimal
+        searchBarButtonItem = navigationItem.rightBarButtonItem
+
+
     }
+    
+    
+    
+    // MARK: Métodos de UISearchBar
+    func showSearchBar() {
+
+        navigationItem.titleView = searchBar
+        searchBar.alpha = 0
+        navigationItem.setRightBarButtonItem(nil, animated: true)
+        UIView.animateWithDuration(0.5, animations: {
+            self.searchBar.alpha = 1
+            }, completion: { finished in
+                self.searchBar.becomeFirstResponder()
+        })
+    }
+    
+    func hideSearchBar() {
+        navigationItem.setRightBarButtonItem(searchBarButtonItem, animated: true)
+        logoImageView.alpha = 0
+        UIView.animateWithDuration(0.3, animations: {
+            self.navigationItem.titleView = self.logoImageView
+            self.logoImageView.alpha = 1
+            }, completion: { finished in
+                
+        })
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        print("dedede")
+    }
+    
+    //MARK: UISearchBarDelegate
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        hideSearchBar()
+    }
+    
+    @IBAction func searchButtonPressed(sender: AnyObject) {
+        showSearchBar()
+    }
+    
     
     func imageWithBorderFromImage(source: UIImage) -> UIImage {
         let size: CGSize = source.size
@@ -109,13 +179,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                     
                     // Los datos obtenidos los codificamos a UTF8
                     let texto = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
-
-                    self.txtViewResponse.text = texto as String
-                    self.txtViewResponse.textColor = UIColor.whiteColor()
-                    self.txtViewResponse.font = UIFont(name: "Trebuchet MS", size: 14.0)
                     
-                    if texto.containsString(isbnText) {
-                        
+                    if texto.containsString(isbnText) {                        
                         
                         do{
                             let jsonDatos = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
