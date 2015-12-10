@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate {
 
-    @IBOutlet weak var txtField: UITextField!
+
     @IBOutlet weak var lblTituloLibro: UILabel!
     @IBOutlet weak var lblAutors: UILabel!
     @IBOutlet weak var imgPortadaLibro: UIImageView!
@@ -39,7 +39,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        txtField.delegate = self
         
         // MARK: Efecto Blur
         imgBackground.backgroundColor = UIColor.clearColor()
@@ -57,6 +56,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
         lblTituloLibro.shadowOffset = CGSize(width: 0, height: 1)
         
 
+        // Esto sirve para hacer la barra de navegación transparente
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController!.navigationBar.translucent = true
@@ -75,9 +75,11 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
         logoImageView.image = logoImage
         navigationItem.titleView = logoImageView
         
+        searchBar.tintColor = UIColor.whiteColor()
+        UITextField.appearanceWhenContainedInInstancesOfClasses([ViewController.self]).keyboardAppearance = .Light
         searchBar.delegate = self
         searchBar.showsCancelButton = true
-        searchBar.searchBarStyle = UISearchBarStyle.Minimal
+        searchBar.searchBarStyle = UISearchBarStyle.Prominent
         searchBarButtonItem = navigationItem.rightBarButtonItem
 
 
@@ -109,18 +111,24 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
         })
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        print("dedede")
-    }
-    
     //MARK: UISearchBarDelegate
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         hideSearchBar()
     }
     
-    @IBAction func searchButtonPressed(sender: AnyObject) {
-        showSearchBar()
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        print("Se presiono el botón de Search")
+        if searchBar.text != "" {
+            obtenerInformacion(searchBar.text!)
+        }
+        else {
+            alert("Debe ingresar un ISBN")
+        }
+        
     }
+    
+
     
     
     func imageWithBorderFromImage(source: UIImage) -> UIImage {
@@ -143,18 +151,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
         return testImg
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.txtField.resignFirstResponder()
-        print("Se presiono el botón de Search")
-        if textField.text != "" {
-            obtenerInformacion(txtField.text!)
-        }
-        else {
-            alert("Debe ingresar un ISBN")
-        }
-        return true
-    }
-    
+        
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.view.endEditing(true)
     }

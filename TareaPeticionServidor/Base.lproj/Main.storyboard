@@ -23,11 +23,10 @@
                                 <animations/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KTO-a2-2Ny">
-                                <rect key="frame" x="85" y="222" width="204" height="223"/>
+                                <rect key="frame" x="85" y="167" width="204" height="333.5"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="188" id="eku-lm-7D7"/>
-                                    <constraint firstAttribute="height" constant="223" id="fOb-Bg-A3Z"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -36,7 +35,7 @@
                                 </variation>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="por " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Ivm-pN-Jwa" userLabel="Autor">
-                                <rect key="frame" x="94" y="500" width="187.5" height="19"/>
+                                <rect key="frame" x="94" y="552" width="187.5" height="19"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="hXz-dj-Opc"/>
@@ -50,17 +49,8 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ingrese el ISBN, ej. 978-84-376-0494-7" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="MwW-BC-0Q1">
-                                <rect key="frame" x="66" y="617" width="244" height="30"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="lfj-X1-JYG"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="13"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Título del libro" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpg-PX-vlZ">
-                                <rect key="frame" x="24" y="466" width="327" height="32"/>
+                                <rect key="frame" x="24" y="518" width="327" height="32"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="ZJe-Gi-qkA"/>
@@ -71,7 +61,7 @@
                             </label>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="0.28674227000000002" green="0.3699073792" blue="0.5429201722" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="KTO-a2-2Ny" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="69" id="0py-Ae-otH"/>
                             <constraint firstItem="2wN-Lh-PqW" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="2E3-fD-6zH"/>
@@ -83,16 +73,18 @@
                             <constraint firstAttribute="trailingMargin" secondItem="2wN-Lh-PqW" secondAttribute="trailing" constant="-20" id="Duh-Sx-Xvn"/>
                             <constraint firstItem="2wN-Lh-PqW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Fz8-r5-NML"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GLy-OR-DQv"/>
+                            <constraint firstItem="KTO-a2-2Ny" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1:2" id="LSX-cO-BYm"/>
                             <constraint firstItem="2wN-Lh-PqW" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="N3S-zA-JOY"/>
                             <constraint firstItem="Ivm-pN-Jwa" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="1:2" id="ORH-ol-qcd"/>
                             <constraint firstItem="2wN-Lh-PqW" firstAttribute="top" secondItem="KTO-a2-2Ny" secondAttribute="bottom" constant="-250" id="PBE-0Y-LFp"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="top" secondItem="KTO-a2-2Ny" secondAttribute="bottom" constant="21" id="RrB-sN-MC6"/>
                             <constraint firstItem="Ivm-pN-Jwa" firstAttribute="centerX" secondItem="gpg-PX-vlZ" secondAttribute="centerX" id="SSi-0H-hMq"/>
                             <constraint firstItem="Ivm-pN-Jwa" firstAttribute="top" secondItem="gpg-PX-vlZ" secondAttribute="bottom" constant="2" id="W0J-eH-5NG"/>
+                            <constraint firstItem="KTO-a2-2Ny" firstAttribute="centerX" secondItem="2wN-Lh-PqW" secondAttribute="centerX" id="Zz8-nN-xHb"/>
+                            <constraint firstItem="KTO-a2-2Ny" firstAttribute="centerY" secondItem="2wN-Lh-PqW" secondAttribute="centerY" id="dPQ-8y-EkT"/>
                             <constraint firstItem="2wN-Lh-PqW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="dUW-3h-QLA"/>
                             <constraint firstItem="2wN-Lh-PqW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="eXk-GY-o9U"/>
-                            <constraint firstItem="MwW-BC-0Q1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pNr-c0-Ttv"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="MwW-BC-0Q1" secondAttribute="bottom" constant="20" id="q33-g4-STR"/>
+                            <constraint firstItem="gpg-PX-vlZ" firstAttribute="top" secondItem="KTO-a2-2Ny" secondAttribute="bottom" constant="17.5" id="fOv-yl-rZN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KTO-a2-2Ny" secondAttribute="trailing" constant="70" id="uKM-EN-m5W"/>
                             <constraint firstItem="2wN-Lh-PqW" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="z33-8R-dR7"/>
                             <constraint firstItem="Ivm-pN-Jwa" firstAttribute="top" secondItem="2wN-Lh-PqW" secondAttribute="bottom" constant="-43.5" id="zat-Qb-LbR"/>
@@ -106,6 +98,8 @@
                                 <exclude reference="PBE-0Y-LFp"/>
                                 <exclude reference="eXk-GY-o9U"/>
                                 <exclude reference="4Ym-Na-1ax"/>
+                                <exclude reference="RrB-sN-MC6"/>
+                                <exclude reference="ALZ-m6-oES"/>
                                 <exclude reference="zat-Qb-LbR"/>
                             </mask>
                         </variation>
@@ -117,7 +111,6 @@
                         <outlet property="imgPortadaLibro" destination="KTO-a2-2Ny" id="sUG-wq-78U"/>
                         <outlet property="lblAutors" destination="Ivm-pN-Jwa" id="Gvd-xw-Pge"/>
                         <outlet property="lblTituloLibro" destination="gpg-PX-vlZ" id="W4Y-XR-114"/>
-                        <outlet property="txtField" destination="MwW-BC-0Q1" id="z2B-KZ-JyR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -134,7 +127,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="7bV-2A-iNZ" style="IBUITableViewCellStyleDefault" id="mub-g2-wTm">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Celda" textLabel="7bV-2A-iNZ" style="IBUITableViewCellStyleDefault" id="mub-g2-wTm" userLabel="Celda">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mub-g2-wTm" id="OJv-b3-3ws">
