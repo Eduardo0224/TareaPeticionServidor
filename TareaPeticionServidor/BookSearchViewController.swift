@@ -8,8 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate {
+protocol BookSearchDelegate {
+    func updateData(data: Model)
+}
 
+class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate {
+
+    var delegate: BookSearchDelegate?
 
     @IBOutlet weak var lblTituloLibro: UILabel!
     @IBOutlet weak var lblAutors: UILabel!
@@ -21,6 +26,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
     var searchBar = UISearchBar()
     var searchBarButtonItem: UIBarButtonItem?
     var logoImageView   : UIImageView!
+    
+    var modelo : Model = Model(_titulo: [])
 
     
     var urlImg : NSURL?
@@ -60,10 +67,14 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
         
 
         // Esto sirve para hacer la barra de navegación transparente
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.navigationController!.navigationBar.shadowImage = UIImage()
-        self.navigationController!.navigationBar.translucent = true
-        self.navigationController!.view.backgroundColor = UIColor.clearColor()
+//        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+//        self.navigationController!.navigationBar.shadowImage = UIImage()
+//        self.navigationController!.navigationBar.translucent = true
+//        self.navigationController!.view.backgroundColor = UIColor.clearColor()
+        
+        self.navigationController!.navigationBar.barStyle = .BlackTranslucent;
+        self.navigationController!.navigationBar.translucent = true;
+
 
         let rightSearchBarButtonItem : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: Selector("showSearchBar"))
         rightSearchBarButtonItem.tintColor = UIColor.whiteColor()
@@ -79,7 +90,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
         navigationItem.titleView = logoImageView
         
         searchBar.tintColor = UIColor.whiteColor()
-        UITextField.appearanceWhenContainedInInstancesOfClasses([ViewController.self]).keyboardAppearance = .Light
+        UITextField.appearanceWhenContainedInInstancesOfClasses([BookSearchViewController.self]).keyboardAppearance = .Light
         searchBar.delegate = self
         searchBar.showsCancelButton = true
         searchBar.searchBarStyle = UISearchBarStyle.Default
@@ -201,6 +212,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
                                 
                                 if let nombreTitulo = datos["title"] as? String{
                                     self.lblTituloLibro.text = nombreTitulo
+                                    
+                                    // Agregamos el título consultado al modelo
+                                    self.modelo.titulo.append(nombreTitulo)
+                                    print(self.modelo)
+                                    
+                                    self.delegate?.updateData(self.modelo)
                                 }
                                 
                                 if let autores = datos["authors"] as? NSArray{
@@ -293,6 +310,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
         alertController.addAction(ok)
         presentViewController(alertController, animated: true, completion: nil)
     }
+    
+   
+    
+    
 
     
     

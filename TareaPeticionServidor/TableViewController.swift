@@ -8,7 +8,19 @@
 
 import UIKit
 
+extension TableViewController: BookSearchDelegate {
+    func updateData(data: Model) {
+        self.modelo = data
+        print("El modelo regresado es: \(self.modelo)")
+        
+    }
+}
+
 class TableViewController: UITableViewController {
+    
+    
+    
+    var modelo : Model = Model(_titulo: [])
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +30,37 @@ class TableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+       
+
+        // Cambiar el color de la barra de estado
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
+        self.navigationController!.navigationBar.barStyle = .BlackTranslucent;
+        self.navigationController!.navigationBar.translucent = true;
+        self.navigationItem.title = "Libros"
+
+        print("LA primer vez vacio: \(self.modelo.titulo)")
+
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        tableView!.delegate = self
+        tableView!.dataSource = self
+        tableView!.reloadData()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "segueBookSearch" {
+            let bookTales = segue.destinationViewController as? BookSearchViewController
+            print(bookTales!.modelo)
+            bookTales!.delegate = self
+            
+            print(segue)
+            //bookTales!.delegate! = self
+//            (segue.destinationViewController as! BookSearchViewController).delegate = self
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,12 +72,13 @@ class TableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        print("Cantidad de elementos en el arreglo de titulos \(self.modelo.titulo.count)")
+        return self.modelo.titulo.count
     }
 
     
@@ -42,11 +86,13 @@ class TableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Celda", forIndexPath: indexPath)
 
         // Configure the cell...
-
+        cell.textLabel?.text = self.modelo.titulo[indexPath.row]
+        print("titulo que debe colocarse en la celda \(self.modelo.titulo[indexPath.row])")
 
         return cell
     }
-
+    
+    
 
     /*
     // Override to support conditional editing of the table view.
