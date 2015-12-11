@@ -40,6 +40,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        // Cambiar el color de la barra de estado
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
         // MARK: Efecto Blur
         imgBackground.backgroundColor = UIColor.clearColor()
         
@@ -79,9 +82,16 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
         UITextField.appearanceWhenContainedInInstancesOfClasses([ViewController.self]).keyboardAppearance = .Light
         searchBar.delegate = self
         searchBar.showsCancelButton = true
-        searchBar.searchBarStyle = UISearchBarStyle.Prominent
-        searchBarButtonItem = navigationItem.rightBarButtonItem
+        searchBar.searchBarStyle = UISearchBarStyle.Default
+        searchBar.placeholder = "Ingrese el ISBN"
 
+        searchBarButtonItem = navigationItem.rightBarButtonItem
+        
+        /* Esto se usa para cambiarle el color al texto del texfield del searcbar
+        let textFieldInsideSearchBar = searchBar.valueForKey("searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
+        */
+        
 
     }
     
@@ -120,7 +130,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate
         searchBar.resignFirstResponder()
         print("Se presiono el botón de Search")
         if searchBar.text != "" {
+            // le dice al delegado que el botón de de cancel ha sido presionado
+            searchBarCancelButtonClicked(searchBar)
             obtenerInformacion(searchBar.text!)
+            searchBar.text = ""
         }
         else {
             alert("Debe ingresar un ISBN")
