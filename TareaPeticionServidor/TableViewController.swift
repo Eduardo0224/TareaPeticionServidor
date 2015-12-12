@@ -16,11 +16,22 @@ extension TableViewController: BookSearchDelegate {
     }
 }
 
+extension TableViewController : NuevoDelegado {
+    func mandarTitulo(tituloMandado: String, imagenMandada: UIImage) {
+        self.titulos.append(tituloMandado)
+        self.imagenTable = imagenMandada
+    }
+}
+
+
 class TableViewController: UITableViewController {
     
+    var titulos : [String] = []
     
     
     var modelo : Model = Model(_titulo: [])
+    
+    var imagenTable : UIImage = UIImage()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +42,7 @@ class TableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-       
+        
 
         // Cambiar el color de la barra de estado
         UIApplication.sharedApplication().statusBarStyle = .LightContent
@@ -46,20 +57,32 @@ class TableViewController: UITableViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        tableView!.delegate = self
-        tableView!.dataSource = self
-        tableView!.reloadData()
+        self.tableView.backgroundView = UIImageView(image: UIImage(named: "Imagen2.jpg"))
+        self.tableView!.reloadData()
+        self.tableView.backgroundView = UIImageView(image: self.imagenTable)
+        self.tableView.backgroundView!.backgroundColor = UIColor.clearColor()
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        
+        //always fill the view
+        blurEffectView.frame = self.tableView.backgroundView!.bounds
+        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        
+        self.tableView.backgroundView!.addSubview(blurEffectView)
+        
     }
+    
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "segueBookSearch" {
             let bookTales = segue.destinationViewController as? BookSearchViewController
-            print(bookTales!.modelo)
             bookTales!.delegate = self
+            bookTales!.delegateNuevoDelegado = self
             
-            print(segue)
-            //bookTales!.delegate! = self
-//            (segue.destinationViewController as! BookSearchViewController).delegate = self
+            
+
         }
     }
 
@@ -77,22 +100,36 @@ class TableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        print("Cantidad de elementos en el arreglo de titulos \(self.modelo.titulo.count)")
-        return self.modelo.titulo.count
+        print("Cantidad de elementos en el arreglo de titulos \(self.titulos.count)")
+//        return self.modelo.titulo.count
+        return self.titulos.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Celda", forIndexPath: indexPath)
 
+        var cell = tableView.dequeueReusableCellWithIdentifier("Celda")!
+        cell = UITableViewCell(style: .Default, reuseIdentifier: "Celda")
+        
         // Configure the cell...
-        cell.textLabel?.text = self.modelo.titulo[indexPath.row]
-        print("titulo que debe colocarse en la celda \(self.modelo.titulo[indexPath.row])")
+        cell.textLabel?.text = self.titulos[indexPath.row]
+        cell.textLabel?.shadowColor = UIColor.blackColor()
+        cell.textLabel?.shadowOffset = CGSize(width: 0, height: 1)
+        
+        if(indexPath.row % 2 == 1){
+            cell.backgroundColor = UIColor.clearColor()
+        }else{
+            cell.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
+        }
+
+        cell.textLabel?.textColor = UIColor.whiteColor()
+
+        
 
         return cell
     }
     
-    
+
 
     /*
     // Override to support conditional editing of the table view.

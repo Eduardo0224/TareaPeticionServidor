@@ -18,6 +18,8 @@
 		B27376A31C18DB8800BEC420 /* logo-navbar.png in Resources */ = {isa = PBXBuildFile; fileRef = B27376A21C18DB8800BEC420 /* logo-navbar.png */; };
 		B277F1F31C1B35FD00949FC5 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B277F1F21C1B35FD00949FC5 /* Model.swift */; };
 		B2EA66A01C0904A500EEB709 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2EA669F1C0904A500EEB709 /* Device.swift */; };
+		B2FFDD921C1C526C002C7115 /* Imagen1.png in Resources */ = {isa = PBXBuildFile; fileRef = B2FFDD911C1C526C002C7115 /* Imagen1.png */; };
+		B2FFDD941C1C54D9002C7115 /* Imagen2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B2FFDD931C1C54D9002C7115 /* Imagen2.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		B27376A21C18DB8800BEC420 /* logo-navbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-navbar.png"; sourceTree = "<group>"; };
 		B277F1F21C1B35FD00949FC5 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		B2EA669F1C0904A500EEB709 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Device.swift; path = TareaPeticionServidor/Device.swift; sourceTree = "<group>"; };
+		B2FFDD911C1C526C002C7115 /* Imagen1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Imagen1.png; sourceTree = "<group>"; };
+		B2FFDD931C1C54D9002C7115 /* Imagen2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Imagen2.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,8 @@
 		B23D0A2A1BFC05EB007CFF3C = {
 			isa = PBXGroup;
 			children = (
+				B2FFDD931C1C54D9002C7115 /* Imagen2.jpg */,
+				B2FFDD911C1C526C002C7115 /* Imagen1.png */,
 				B27376A21C18DB8800BEC420 /* logo-navbar.png */,
 				B21BE3A91C15B9FC00F024D3 /* Utils */,
 				B23D0A351BFC05EB007CFF3C /* TareaPeticionServidor */,
@@ -273,6 +279,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2FFDD921C1C526C002C7115 /* Imagen1.png in Resources */,
+				B2FFDD941C1C54D9002C7115 /* Imagen2.jpg in Resources */,
 				B23D0A411BFC05EB007CFF3C /* LaunchScreen.storyboard in Resources */,
 				B23D0A3E1BFC05EB007CFF3C /* Assets.xcassets in Resources */,
 				B27376A31C18DB8800BEC420 /* logo-navbar.png in Resources */,

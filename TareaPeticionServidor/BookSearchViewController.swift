@@ -12,9 +12,16 @@ protocol BookSearchDelegate {
     func updateData(data: Model)
 }
 
+protocol NuevoDelegado {
+    func mandarTitulo(tituloMandado : String, imagenMandada: UIImage)
+}
+
 class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate {
 
     var delegate: BookSearchDelegate?
+    var delegateNuevoDelegado : NuevoDelegado?
+    
+    var tituloAMandar = ""
 
     @IBOutlet weak var lblTituloLibro: UILabel!
     @IBOutlet weak var lblAutors: UILabel!
@@ -218,6 +225,9 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
                                     print(self.modelo)
                                     
                                     self.delegate?.updateData(self.modelo)
+                                    
+                                    self.tituloAMandar = nombreTitulo
+                                    
                                 }
                                 
                                 if let autores = datos["authors"] as? NSArray{
@@ -277,6 +287,9 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
                                         
                                         self.imgBackground.image = UIImage(data: data!)
                                         self.imgPortadaLibro.image = self.imageWithBorderFromImage(UIImage(data: data!)!)
+                                        
+                                        
+                                        self.delegateNuevoDelegado?.mandarTitulo(self.tituloAMandar, imagenMandada: self.imgPortadaLibro.image!)
                                         spinner.stopAnimating()
                                         spinner.removeFromSuperview()
 
