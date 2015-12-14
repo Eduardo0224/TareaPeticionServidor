@@ -13,7 +13,7 @@ protocol BookSearchDelegate {
 }
 
 protocol NuevoDelegado {
-    func mandarTitulo(tituloMandado : String, imagenMandada: UIImage)
+    func mandarTitulo(tituloMandado : String, imagenMandada: UIImage, _autorMandado: String)
 }
 
 class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate {
@@ -22,6 +22,7 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
     var delegateNuevoDelegado : NuevoDelegado?
     
     var tituloAMandar = ""
+    var autoresAMandar = ""
 
     @IBOutlet weak var lblTituloLibro: UILabel!
     @IBOutlet weak var lblAutors: UILabel!
@@ -72,13 +73,6 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
         lblTituloLibro.shadowColor = UIColor.blackColor()
         lblTituloLibro.shadowOffset = CGSize(width: 0, height: 1)
         
-
-        // Esto sirve para hacer la barra de navegación transparente
-//        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-//        self.navigationController!.navigationBar.shadowImage = UIImage()
-//        self.navigationController!.navigationBar.translucent = true
-//        self.navigationController!.view.backgroundColor = UIColor.clearColor()
-        
         self.navigationController!.navigationBar.barStyle = .BlackTranslucent;
         self.navigationController!.navigationBar.translucent = true;
 
@@ -104,13 +98,6 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
         searchBar.placeholder = "Ingrese el ISBN"
 
         searchBarButtonItem = navigationItem.rightBarButtonItem
-        
-        /* Esto se usa para cambiarle el color al texto del texfield del searcbar
-        let textFieldInsideSearchBar = searchBar.valueForKey("searchField") as? UITextField
-        textFieldInsideSearchBar?.textColor = UIColor.whiteColor()
-        */
-        
-
     }
     
     
@@ -146,7 +133,6 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        print("Se presiono el botón de Search")
         if searchBar.text != "" {
             // le dice al delegado que el botón de de cancel ha sido presionado
             searchBarCancelButtonClicked(searchBar)
@@ -222,7 +208,6 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
                                     
                                     // Agregamos el título consultado al modelo
                                     self.modelo.titulo.append(nombreTitulo)
-                                    print(self.modelo)
                                     
                                     self.delegate?.updateData(self.modelo)
                                     
@@ -241,6 +226,8 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
                                         }
                                         ++index
                                     }
+                                    
+                                    self.autoresAMandar = self.lblAutors.text!
                                     
                                     // Código nuevo para colocar diferentes colores en un mismo label
                                     let text: NSMutableAttributedString = NSMutableAttributedString(attributedString: self.lblAutors.attributedText!)
@@ -261,23 +248,18 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
                                             if self.iPhone {
                                                 if Device.IS_3_5_INCHES() {
                                                     self.urlImg = NSURL(string: covers["small"] as! NSString as String)
-                                                    print("3.5 inches")
                                                 }
                                                 else if Device.IS_4_INCHES() {
                                                     self.urlImg = NSURL(string: covers["medium"] as! NSString as String)
-                                                    print("4 inches")
                                                 }
                                                 else if Device.IS_4_7_INCHES() {
                                                     self.urlImg = NSURL(string: covers["medium"] as! NSString as String)
-                                                    print("4.7 inches")
                                                 }
                                                 else if Device.IS_5_5_INCHES() {
                                                     self.urlImg = NSURL(string: covers["large"] as! NSString as String)
-                                                    print("5.5 inches")
                                                 }
                                             } else if self.iPad {
                                                 self.urlImg = NSURL(string: covers["large"] as! NSString as String)
-                                                print("iPad")
                                             }
                                         }
 
@@ -289,7 +271,7 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
                                         self.imgPortadaLibro.image = self.imageWithBorderFromImage(UIImage(data: data!)!)
                                         
                                         
-                                        self.delegateNuevoDelegado?.mandarTitulo(self.tituloAMandar, imagenMandada: self.imgPortadaLibro.image!)
+                                        self.delegateNuevoDelegado?.mandarTitulo(self.tituloAMandar, imagenMandada: self.imgPortadaLibro.image!, _autorMandado: self.autoresAMandar)
                                         spinner.stopAnimating()
                                         spinner.removeFromSuperview()
 

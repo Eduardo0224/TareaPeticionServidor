@@ -11,14 +11,16 @@ import UIKit
 extension TableViewController: BookSearchDelegate {
     func updateData(data: Model) {
         self.modelo = data
-        print("El modelo regresado es: \(self.modelo)")
         
     }
 }
 
 extension TableViewController : NuevoDelegado {
-    func mandarTitulo(tituloMandado: String, imagenMandada: UIImage) {
+    func mandarTitulo(tituloMandado: String, imagenMandada: UIImage, _autorMandado : String) {
         self.titulos.append(tituloMandado)
+        self.autores.append(_autorMandado)
+        self.portadas.append(imagenMandada)
+        
         self.imagenTable = imagenMandada
     }
 }
@@ -27,11 +29,14 @@ extension TableViewController : NuevoDelegado {
 class TableViewController: UITableViewController {
     
     var titulos : [String] = []
+    var autores : [String] = []
+    var portadas : [UIImage] = []
+    var index: Int?
     
     
     var modelo : Model = Model(_titulo: [])
     
-    var imagenTable : UIImage = UIImage()
+    var imagenTable : UIImage? = UIImage()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +47,6 @@ class TableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        
 
         // Cambiar el color de la barra de estado
         UIApplication.sharedApplication().statusBarStyle = .LightContent
@@ -50,16 +54,28 @@ class TableViewController: UITableViewController {
         self.navigationController!.navigationBar.barStyle = .BlackTranslucent;
         self.navigationController!.navigationBar.translucent = true;
         self.navigationItem.title = "Libros"
+        
 
-        print("LA primer vez vacio: \(self.modelo.titulo)")
 
 
     }
     
     override func viewDidAppear(animated: Bool) {
-        self.tableView.backgroundView = UIImageView(image: UIImage(named: "Imagen2.jpg"))
+        
+
+        
+        if let imagenTabla = imagenTable {
+            self.tableView.backgroundView = UIImageView(image: imagenTabla)
+        }
+        else {
+            self.tableView.backgroundView = UIImageView(image: UIImage(named: "Imagen2.jpg"))
+        }
+        
+
+        
         self.tableView!.reloadData()
-        self.tableView.backgroundView = UIImageView(image: self.imagenTable)
+        
+        tableView.separatorInset = UIEdgeInsetsZero
         self.tableView.backgroundView!.backgroundColor = UIColor.clearColor()
         
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
@@ -71,19 +87,45 @@ class TableViewController: UITableViewController {
         
         self.tableView.backgroundView!.addSubview(blurEffectView)
         
+        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        
     }
     
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "segueBookSearch" {
-            let bookTales = segue.destinationViewController as? BookSearchViewController
-            bookTales!.delegate = self
-            bookTales!.delegateNuevoDelegado = self
-            
-            
-
+            let bookSearch = segue.destinationViewController as? BookSearchViewController
+            bookSearch!.delegate = self
+            bookSearch!.delegateNuevoDelegado = self
         }
+        
+        if segue.identifier == "segueDetail" {
+            
+            print("Encontro el identifier del segue")
+            if let destination = segue.destinationViewController as? DetailViewController {
+                            print("El viewcontroller de destino se castea a DeatilViewController")
+                
+                    
+                    
+                    print("El sender es un UITableViewCell")
+                    
+                
+                    print("El indexPath es \(index)")
+                    
+                    let tituloD = self.titulos[index!]
+                    destination.tituloDetalle = tituloD
+                    
+                    let autoresD = self.autores[index!]
+                    destination.autoresDetalle = autoresD
+                    
+                    let portadaD = self.portadas[index!]
+                    destination.portadaDetalle = portadaD
+                
+            }
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -101,7 +143,6 @@ class TableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         print("Cantidad de elementos en el arreglo de titulos \(self.titulos.count)")
-//        return self.modelo.titulo.count
         return self.titulos.count
     }
 
@@ -121,12 +162,28 @@ class TableViewController: UITableViewController {
         }else{
             cell.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
         }
+        
+        let color = UIColor(red: 180 / 255, green: 138 / 255, blue: 171 / 255, alpha: 1)
+        let myCustomSelectionColorView = UIView()
+        myCustomSelectionColorView.backgroundColor = color
+        cell.selectedBackgroundView = myCustomSelectionColorView
 
         cell.textLabel?.textColor = UIColor.whiteColor()
 
-        
-
+        cell.separatorInset = UIEdgeInsetsZero
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if let _ = tableView.cellForRowAtIndexPath(indexPath) {
+            print(self.titulos[indexPath.row])
+            index = indexPath.row
+            performSegueWithIdentifier("segueDetail", sender: self)
+        }
+        else {
+        }
+
     }
     
 

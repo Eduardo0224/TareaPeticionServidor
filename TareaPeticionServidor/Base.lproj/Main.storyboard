@@ -23,7 +23,7 @@
                                 <animations/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KTO-a2-2Ny">
-                                <rect key="frame" x="85" y="167" width="204" height="333.5"/>
+                                <rect key="frame" x="72" y="167" width="230" height="333.5"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="188" id="eku-lm-7D7"/>
@@ -85,6 +85,7 @@
                             <constraint firstItem="2wN-Lh-PqW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="dUW-3h-QLA"/>
                             <constraint firstItem="2wN-Lh-PqW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="eXk-GY-o9U"/>
                             <constraint firstItem="gpg-PX-vlZ" firstAttribute="top" secondItem="KTO-a2-2Ny" secondAttribute="bottom" constant="17.5" id="fOv-yl-rZN"/>
+                            <constraint firstItem="KTO-a2-2Ny" firstAttribute="width" secondItem="2wN-Lh-PqW" secondAttribute="width" multiplier="0.6" id="qga-Zs-6xq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KTO-a2-2Ny" secondAttribute="trailing" constant="70" id="uKM-EN-m5W"/>
                             <constraint firstItem="2wN-Lh-PqW" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="z33-8R-dR7"/>
                             <constraint firstItem="Ivm-pN-Jwa" firstAttribute="top" secondItem="2wN-Lh-PqW" secondAttribute="bottom" constant="-43.5" id="zat-Qb-LbR"/>
@@ -97,7 +98,9 @@
                                 <exclude reference="N3S-zA-JOY"/>
                                 <exclude reference="PBE-0Y-LFp"/>
                                 <exclude reference="eXk-GY-o9U"/>
+                                <exclude reference="0py-Ae-otH"/>
                                 <exclude reference="4Ym-Na-1ax"/>
+                                <exclude reference="uKM-EN-m5W"/>
                                 <exclude reference="RrB-sN-MC6"/>
                                 <exclude reference="ALZ-m6-oES"/>
                                 <exclude reference="zat-Qb-LbR"/>
@@ -115,7 +118,105 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1531.5" y="414.5"/>
+            <point key="canvasLocation" x="1575.5" y="64.5"/>
+        </scene>
+        <!--Detalle-->
+        <scene sceneID="qOF-pA-H74">
+            <objects>
+                <viewController title="Detalle" id="z3W-tf-Vnh" customClass="DetailViewController" customModule="TareaPeticionServidor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YK1-JA-GcX"/>
+                        <viewControllerLayoutGuide type="bottom" id="3O0-5y-Pjr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1Un-Az-bbU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="29l-II-Cdz">
+                                <rect key="frame" x="0.0" y="64" width="375" height="334"/>
+                                <animations/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hTC-ID-Bt7">
+                                <rect key="frame" x="0.0" y="149.5" width="163" height="238.5"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="188" id="1Lo-OK-Rpu"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="1Lo-OK-Rpu"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Título del libro" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pvk-Qn-4OR">
+                                <rect key="frame" x="38" y="413" width="300" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="cxR-GO-IP8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="30"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Autor del libro" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vm2-DO-yhV">
+                                <rect key="frame" x="93.5" y="451" width="188" height="21"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="UZI-Jt-jQ8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="29l-II-Cdz" secondAttribute="trailing" id="3X4-vv-yBY"/>
+                            <constraint firstItem="pvk-Qn-4OR" firstAttribute="top" secondItem="29l-II-Cdz" secondAttribute="bottom" constant="15" id="57i-PY-Ndz"/>
+                            <constraint firstItem="3O0-5y-Pjr" firstAttribute="top" secondItem="vm2-DO-yhV" secondAttribute="bottom" constant="195" id="74J-KI-Ksj"/>
+                            <constraint firstItem="vm2-DO-yhV" firstAttribute="centerX" secondItem="1Un-Az-bbU" secondAttribute="centerX" id="7TZ-vE-zT7"/>
+                            <constraint firstItem="hTC-ID-Bt7" firstAttribute="top" secondItem="YK1-JA-GcX" secondAttribute="bottom" constant="80" id="9yj-Xm-Pg1"/>
+                            <constraint firstItem="29l-II-Cdz" firstAttribute="height" secondItem="hTC-ID-Bt7" secondAttribute="height" multiplier="1.4" id="AdF-gF-1xr"/>
+                            <constraint firstItem="pvk-Qn-4OR" firstAttribute="width" secondItem="1Un-Az-bbU" secondAttribute="width" multiplier="0.8" id="B99-CT-wrc"/>
+                            <constraint firstItem="hTC-ID-Bt7" firstAttribute="bottom" secondItem="29l-II-Cdz" secondAttribute="bottom" constant="-10" id="FOW-Wg-NCk"/>
+                            <constraint firstItem="29l-II-Cdz" firstAttribute="leading" secondItem="1Un-Az-bbU" secondAttribute="leading" id="OeE-ex-oqo"/>
+                            <constraint firstItem="vm2-DO-yhV" firstAttribute="leading" secondItem="1Un-Az-bbU" secondAttribute="leadingMargin" constant="-15" id="XKk-Xd-6eH"/>
+                            <constraint firstItem="vm2-DO-yhV" firstAttribute="width" secondItem="1Un-Az-bbU" secondAttribute="width" multiplier="1:2" id="ake-ca-jsB"/>
+                            <constraint firstItem="29l-II-Cdz" firstAttribute="top" secondItem="YK1-JA-GcX" secondAttribute="bottom" id="b9s-iV-60X"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vm2-DO-yhV" secondAttribute="trailing" constant="-17" id="cVR-BV-jtQ"/>
+                            <constraint firstItem="29l-II-Cdz" firstAttribute="width" secondItem="hTC-ID-Bt7" secondAttribute="width" multiplier="2.3" id="doo-Zs-TBl"/>
+                            <constraint firstItem="29l-II-Cdz" firstAttribute="height" secondItem="1Un-Az-bbU" secondAttribute="height" multiplier="1:2" id="ecX-ck-1ZA"/>
+                            <constraint firstItem="vm2-DO-yhV" firstAttribute="top" secondItem="pvk-Qn-4OR" secondAttribute="bottom" constant="8" symbolic="YES" id="foj-Fq-34s"/>
+                            <constraint firstItem="vm2-DO-yhV" firstAttribute="leading" secondItem="1Un-Az-bbU" secondAttribute="leadingMargin" constant="-15" id="mNL-1K-dCS"/>
+                            <constraint firstItem="hTC-ID-Bt7" firstAttribute="top" secondItem="YK1-JA-GcX" secondAttribute="bottom" constant="167" id="mUD-sY-Pxs"/>
+                            <constraint firstItem="hTC-ID-Bt7" firstAttribute="leading" secondItem="29l-II-Cdz" secondAttribute="leading" id="pVQ-yR-B1a"/>
+                            <constraint firstItem="hTC-ID-Bt7" firstAttribute="leading" secondItem="1Un-Az-bbU" secondAttribute="leadingMargin" constant="-20" id="sC5-Ta-lhL"/>
+                            <constraint firstItem="pvk-Qn-4OR" firstAttribute="centerX" secondItem="29l-II-Cdz" secondAttribute="centerX" id="spj-lx-MUz"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="9yj-Xm-Pg1"/>
+                                <exclude reference="mUD-sY-Pxs"/>
+                                <exclude reference="sC5-Ta-lhL"/>
+                                <exclude reference="XKk-Xd-6eH"/>
+                                <exclude reference="cVR-BV-jtQ"/>
+                                <exclude reference="mNL-1K-dCS"/>
+                                <exclude reference="74J-KI-Ksj"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="imgPortada" destination="hTC-ID-Bt7" id="VPM-6O-GE9"/>
+                        <outlet property="imgPortadaBackground" destination="29l-II-Cdz" id="KKh-3x-oY5"/>
+                        <outlet property="lblAutorLibro" destination="vm2-DO-yhV" id="tPK-MH-8os"/>
+                        <outlet property="lblTituloLibro" destination="pvk-Qn-4OR" id="g38-s9-bNW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mth-mw-5Bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1575.5" y="823.5"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="THX-CR-EYj">
@@ -161,6 +262,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="z3W-tf-Vnh" kind="show" identifier="segueDetail" id="Wim-kv-nPh"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nDY-f2-d86" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
