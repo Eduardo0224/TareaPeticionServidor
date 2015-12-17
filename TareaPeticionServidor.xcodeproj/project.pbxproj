@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B21BE3AD1C15BC1400F024D3 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21BE3AC1C15BC1400F024D3 /* TableViewController.swift */; };
+		B23BCB551C235BB100C81F86 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B23BCB531C235BB100C81F86 /* Model.xcdatamodeld */; };
 		B23D0A371BFC05EB007CFF3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D0A361BFC05EB007CFF3C /* AppDelegate.swift */; };
 		B23D0A391BFC05EB007CFF3C /* BookSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D0A381BFC05EB007CFF3C /* BookSearchViewController.swift */; };
 		B23D0A3C1BFC05EB007CFF3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B23D0A3A1BFC05EB007CFF3C /* Main.storyboard */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		B21BE3AC1C15BC1400F024D3 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		B23BCB541C235BB100C81F86 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B23D0A331BFC05EB007CFF3C /* TareaPeticionServidor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TareaPeticionServidor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B23D0A361BFC05EB007CFF3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B23D0A381BFC05EB007CFF3C /* BookSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSearchViewController.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 		B23D0A2A1BFC05EB007CFF3C = {
 			isa = PBXGroup;
 			children = (
+				B23BCB531C235BB100C81F86 /* Model.xcdatamodeld */,
 				B2FFDD931C1C54D9002C7115 /* Imagen2.jpg */,
 				B2FFDD911C1C526C002C7115 /* Imagen1.png */,
 				B27376A21C18DB8800BEC420 /* logo-navbar.png */,
@@ -315,6 +318,7 @@
 				B277F1F31C1B35FD00949FC5 /* Model.swift in Sources */,
 				B2EA66A01C0904A500EEB709 /* Device.swift in Sources */,
 				B23D0A391BFC05EB007CFF3C /* BookSearchViewController.swift in Sources */,
+				B23BCB551C235BB100C81F86 /* Model.xcdatamodeld in Sources */,
 				B2FF85DF1C1DB20F0065C756 /* DetailViewController.swift in Sources */,
 				B23D0A371BFC05EB007CFF3C /* AppDelegate.swift in Sources */,
 				B21BE3AD1C15BC1400F024D3 /* TableViewController.swift in Sources */,
@@ -567,6 +571,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B23BCB531C235BB100C81F86 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B23BCB541C235BB100C81F86 /* Model.xcdatamodel */,
+			);
+			currentVersion = B23BCB541C235BB100C81F86 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B23D0A2B1BFC05EB007CFF3C /* Project object */;
 }
