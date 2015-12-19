@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol BookSearchDelegate {
     func updateData(data: Model)
@@ -17,12 +18,17 @@ protocol NuevoDelegado {
 }
 
 class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate {
+    
+    // nos permite acceder al contexto de la pila de core data
+    var contexto : NSManagedObjectContext? = nil
 
     var delegate: BookSearchDelegate?
     var delegateNuevoDelegado : NuevoDelegado?
     
     var tituloAMandar = ""
     var autoresAMandar = ""
+    var autoresEntidad = ""
+    var isbn : String? = nil
 
     @IBOutlet weak var lblTituloLibro: UILabel!
     @IBOutlet weak var lblAutors: UILabel!
@@ -54,6 +60,8 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.contexto = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        
         
         // Cambiar el color de la barra de estado
         UIApplication.sharedApplication().statusBarStyle = .LightContent
@@ -136,8 +144,44 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
         if searchBar.text != "" {
             // le dice al delegado que el botón de de cancel ha sido presionado
             searchBarCancelButtonClicked(searchBar)
+
+            
+            // Antes de hacer la busqueda consultar si ese terminó ya fue consultado
+            let libroEntidad = NSEntityDescription.entityForName("Libro", inManagedObjectContext: self.contexto!)
+            
+            // Hacer la petición
+            let peticion = libroEntidad?.managedObjectModel.fetchRequestFromTemplateWithName("peticionLibro", substitutionVariables: ["isbn": searchBar.text!])
+            
+            do {
+                let libroEntidad2 = try self.contexto?.executeFetchRequest(peticion!)
+                // Si arroja un valor es que ya se había hechp esa consulta anteriormente
+                if libroEntidad2?.count > 0 {
+                    // ya se realizo la consulta antes
+                    // ya no se hace nada
+                    print("Debe salir de aquí")
+                    let tituloEntidad = libroEntidad2![(libroEntidad2?.count)! - 1].valueForKey("titulo") as! String
+                    let autorEntidad = libroEntidad2![(libroEntidad2?.count)! - 1].valueForKey("autor") as! String
+                    
+                    let bSVC = BookSearchViewController()
+                    let portadaEntidadBackground = UIImage(data: libroEntidad2![(libroEntidad2?.count)! - 1].valueForKey("portada") as! NSData)
+                    let portadaEntidad = bSVC.imageWithBorderFromImage(UIImage(data: libroEntidad2![(libroEntidad2?.count)! - 1].valueForKey("portada") as! NSData)!)
+                    
+                    lblAutors.text = autorEntidad
+                    lblTituloLibro.text = tituloEntidad
+                    imgPortadaLibro.image = portadaEntidad
+                    imgBackground.image = portadaEntidadBackground
+                    
+                    searchBar.text = ""
+                    return
+                }
+            }
+            catch {
+                
+            }
+            
             obtenerInformacion(searchBar.text!)
             searchBar.text = ""
+            
         }
         else {
             alert("Debe ingresar un ISBN")
@@ -145,6 +189,14 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
         
     }
     
+    func crearImagenEntidad(imagenPortadaLista : UIImage) -> NSObject {
+        var entidadADevolver : NSObject? = nil
+        
+        let imagenEntidad = NSEntityDescription.insertNewObjectForEntityForName("Libro", inManagedObjectContext: self.contexto!)
+        imagenEntidad.setValue(UIImagePNGRepresentation(imagenPortadaLista), forKey: "portada")
+        entidadADevolver = imagenEntidad as NSObject
+        return entidadADevolver!
+    }
 
     
     
@@ -200,8 +252,11 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
                             let jsonDatos = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                             let keyJsonData : String = "ISBN:" + isbnText
                             
+                            self.isbn = isbnText
+                            
                             
                             if let datos = jsonDatos[keyJsonData] as? NSDictionary{
+                                
                                 
                                 if let nombreTitulo = datos["title"] as? String{
                                     self.lblTituloLibro.text = nombreTitulo
@@ -216,16 +271,21 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
                                 }
                                 
                                 if let autores = datos["authors"] as? NSArray{
+                                   
                                     self.lblAutors.text = "Por "
+                                    self.autoresEntidad = ""
                                     var index: Int = 0
                                     for nombreAutor in autores {
                                         if index == autores.count - 1 {
+                                            self.autoresEntidad = self.autoresEntidad + (nombreAutor["name"] as! String)
                                             self.lblAutors.text = self.lblAutors.text! + (nombreAutor["name"] as! String)
                                         }else{
+                                            self.autoresEntidad = self.autoresEntidad + (nombreAutor["name"] as! String) + ", "
                                             self.lblAutors.text = self.lblAutors.text! + (nombreAutor["name"] as! String) + ", "
                                         }
                                         ++index
                                     }
+                                    
                                     
                                     self.autoresAMandar = self.lblAutors.text!
                                     
@@ -274,6 +334,22 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
                                         self.delegateNuevoDelegado?.mandarTitulo(self.tituloAMandar, imagenMandada: self.imgPortadaLibro.image!, _autorMandado: self.autoresAMandar)
                                         spinner.stopAnimating()
                                         spinner.removeFromSuperview()
+                                        
+                                        let nuevoLibroEntidad  = NSEntityDescription.insertNewObjectForEntityForName("Libro", inManagedObjectContext: self.contexto!)
+                                        nuevoLibroEntidad.setValue(self.tituloAMandar, forKey: "titulo")
+                                        
+                                        // alamcenar imagen
+                                        nuevoLibroEntidad.setValue(data!, forKey: "portada")
+                                        // almacenar titulo
+                                        nuevoLibroEntidad.setValue(self.autoresEntidad, forKey: "autor")
+                                        // almacenar el ISBN
+                                        nuevoLibroEntidad.setValue(self.isbn, forKey: "isbn")
+                                        
+                                        do {
+                                            try self.contexto?.save()
+                                        }
+                                        catch {
+                                        }
 
                                     })
                                 }

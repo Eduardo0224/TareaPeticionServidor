@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 extension TableViewController: BookSearchDelegate {
     func updateData(data: Model) {
@@ -28,6 +29,11 @@ extension TableViewController : NuevoDelegado {
 
 class TableViewController: UITableViewController {
     
+    // nos permite acceder al contexto de la pila de core data
+    var contexto : NSManagedObjectContext? = nil
+    
+    
+    
     var titulos : [String] = []
     var autores : [String] = []
     var portadas : [UIImage] = []
@@ -40,6 +46,31 @@ class TableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.contexto = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        
+        let libroEntidad = NSEntityDescription.entityForName("Libro", inManagedObjectContext: self.contexto!)
+        
+        let peticion = libroEntidad?.managedObjectModel.fetchRequestTemplateForName("peticionLibros")
+        
+        do {
+            let librosEntidad = try self.contexto?.executeFetchRequest(peticion!)
+            
+            for libro in librosEntidad! {
+                let tituloEntidad = libro.valueForKey("titulo") as! String
+                let autorEntidad = libro.valueForKey("autor") as! String
+                
+                let bSVC = BookSearchViewController()
+                let portadaEntidad = bSVC.imageWithBorderFromImage(UIImage(data: libro.valueForKey("portada") as! NSData)!)
+                
+                self.titulos.append(tituloEntidad)
+                self.autores.append(autorEntidad)
+                self.portadas.append(portadaEntidad)
+            }
+        }
+        catch {
+            
+        }
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
