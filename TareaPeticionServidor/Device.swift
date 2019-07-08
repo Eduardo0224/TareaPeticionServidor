@@ -17,21 +17,21 @@ struct Device {
 
     static var TheCurrentDevice: UIDevice {
         struct Singleton {
-            static let device = UIDevice.currentDevice()
+            static let device = UIDevice.current
         }
         return Singleton.device
     }
 
     static var TheCurrentDeviceVersion: Float {
         struct Singleton {
-            static let version = (UIDevice.currentDevice().systemVersion as NSString).floatValue
+            static let version = (UIDevice.current.systemVersion as NSString).floatValue
         }
         return Singleton.version
     }
 
     static var TheCurrentDeviceHeight: CGFloat {
         struct Singleton {
-            static let height = UIScreen.mainScreen().bounds.size.height
+            static let height = UIScreen.main.bounds.size.height
         }
         return Singleton.height
     }
@@ -56,7 +56,7 @@ struct Device {
     }
 
     static var SIMULATOR_OR_DEVICE: String {
-        #if (arch(i386) || arch(x86_64)) && os(iOS)
+        #if targetEnvironment(simulator)
             return "Simulator"
         #else
             return "Device"
@@ -64,11 +64,11 @@ struct Device {
     }
 
     static func isPhone() -> Bool {
-        return TheCurrentDevice.userInterfaceIdiom == .Phone
+        return TheCurrentDevice.userInterfaceIdiom == .phone
     }
 
     static func isPad() -> Bool {
-        return TheCurrentDevice.userInterfaceIdiom == .Pad
+        return TheCurrentDevice.userInterfaceIdiom == .pad
     }
 
     static func isDebug() -> Bool {
@@ -116,71 +116,71 @@ struct Device {
     // MARK: iOS 5 Checks
 
     static func IS_OS_5() -> Bool {
-        return isVersion(.Five)
+        return isVersion(version: .Five)
     }
 
     static func IS_OS_5_OR_LATER() -> Bool {
-        return isVersionOrLater(.Five)
+        return isVersionOrLater(version: .Five)
     }
 
     static func IS_OS_5_OR_EARLIER() -> Bool {
-        return isVersionOrEarlier(.Five)
+        return isVersionOrEarlier(version: .Five)
     }
 
     // MARK: iOS 6 Checks
 
     static func IS_OS_6() -> Bool {
-        return isVersion(.Six)
+        return isVersion(version: .Six)
     }
 
     static func IS_OS_6_OR_LATER() -> Bool {
-        return isVersionOrLater(.Six)
+        return isVersionOrLater(version: .Six)
     }
 
     static func IS_OS_6_OR_EARLIER() -> Bool {
-        return isVersionOrEarlier(.Six)
+        return isVersionOrEarlier(version: .Six)
     }
 
     // MARK: iOS 7 Checks
 
     static func IS_OS_7() -> Bool {
-        return isVersion(.Seven)
+        return isVersion(version: .Seven)
     }
 
     static func IS_OS_7_OR_LATER() -> Bool {
-        return isVersionOrLater(.Seven)
+        return isVersionOrLater(version: .Seven)
     }
 
     static func IS_OS_7_OR_EARLIER() -> Bool {
-        return isVersionOrEarlier(.Seven)
+        return isVersionOrEarlier(version: .Seven)
     }
 
     // MARK: iOS 8 Checks
 
     static func IS_OS_8() -> Bool {
-        return isVersion(.Eight)
+        return isVersion(version: .Eight)
     }
 
     static func IS_OS_8_OR_LATER() -> Bool {
-        return isVersionOrLater(.Eight)
+        return isVersionOrLater(version: .Eight)
     }
 
     static func IS_OS_8_OR_EARLIER() -> Bool {
-        return isVersionOrEarlier(.Eight)
+        return isVersionOrEarlier(version: .Eight)
     }
 
     // MARK: iOS 9 Checks
 
     static func IS_OS_9() -> Bool {
-        return isVersion(.Nine)
+        return isVersion(version: .Nine)
     }
 
     static func IS_OS_9_OR_LATER() -> Bool {
-        return isVersionOrLater(.Nine)
+        return isVersionOrLater(version: .Nine)
     }
 
     static func IS_OS_9_OR_EARLIER() -> Bool {
-        return isVersionOrEarlier(.Nine)
+        return isVersionOrEarlier(version: .Nine)
     }
 
     // MARK: - Device Size Checks
@@ -220,68 +220,84 @@ struct Device {
     // MARK: Retina Check
 
     static func IS_RETINA() -> Bool {
-        return UIScreen.mainScreen().respondsToSelector("scale")
+        return UIScreen.main.isRetina
     }
 
     // MARK: 3.5 Inch Checks
 
     static func IS_3_5_INCHES() -> Bool {
-        return isPhone() && isSize(.Inches_3_5)
+        return isPhone() && isSize(height: .Inches_3_5)
     }
 
     static func IS_3_5_INCHES_OR_LARGER() -> Bool {
-        return isPhone() && isSizeOrLarger(.Inches_3_5)
+        return isPhone() && isSizeOrLarger(height: .Inches_3_5)
     }
 
     static func IS_3_5_INCHES_OR_SMALLER() -> Bool {
-        return isPhone() && isSizeOrSmaller(.Inches_3_5)
+        return isPhone() && isSizeOrSmaller(height: .Inches_3_5)
     }
 
     // MARK: 4 Inch Checks
 
     static func IS_4_INCHES() -> Bool {
-        return isPhone() && isSize(.Inches_4)
+        return isPhone() && isSize(height: .Inches_4)
     }
 
     static func IS_4_INCHES_OR_LARGER() -> Bool {
-        return isPhone() && isSizeOrLarger(.Inches_4)
+        return isPhone() && isSizeOrLarger(height: .Inches_4)
     }
 
     static func IS_4_INCHES_OR_SMALLER() -> Bool {
-        return isPhone() && isSizeOrSmaller(.Inches_4)
+        return isPhone() && isSizeOrSmaller(height: .Inches_4)
     }
 
     // MARK: 4.7 Inch Checks
 
     static func IS_4_7_INCHES() -> Bool {
-        return isPhone() && isSize(.Inches_4_7)
+        return isPhone() && isSize(height: .Inches_4_7)
     }
 
     static func IS_4_7_INCHES_OR_LARGER() -> Bool {
-        return isPhone() && isSizeOrLarger(.Inches_4_7)
+        return isPhone() && isSizeOrLarger(height: .Inches_4_7)
     }
 
     static func IS_4_7_INCHES_OR_SMALLER() -> Bool {
-        return isPhone() && isSizeOrLarger(.Inches_4_7)
+        return isPhone() && isSizeOrLarger(height: .Inches_4_7)
     }
 
     // MARK: 5.5 Inch Checks
 
     static func IS_5_5_INCHES() -> Bool {
-        return isPhone() && isSize(.Inches_5_5)
+        return isPhone() && isSize(height: .Inches_5_5)
     }
 
     static func IS_5_5_INCHES_OR_LARGER() -> Bool {
-        return isPhone() && isSizeOrLarger(.Inches_5_5)
+        return isPhone() && isSizeOrLarger(height: .Inches_5_5)
     }
 
     static func IS_5_5_INCHES_OR_SMALLER() -> Bool {
-        return isPhone() && isSizeOrLarger(.Inches_5_5)
+        return isPhone() && isSizeOrLarger(height: .Inches_5_5)
     }
 
     // MARK: - International Checks
 
     static var CURRENT_REGION: String {
-        return NSLocale.currentLocale().objectForKey(NSLocaleCountryCode) as! String
+        return NSLocale().object(forKey: NSLocale.Key.countryCode) as! String
+    }
+}
+
+extension UIScreen {
+    public var isRetina: Bool {
+        guard let scale = screenScale else {
+            return false
+        }
+        return scale >= 2.0
+    }
+    
+    private var screenScale: CGFloat? {
+        guard UIScreen.main.responds(to: #selector(getter: scale)) else {
+            return nil
+        }
+        return UIScreen.main.scale
     }
 }

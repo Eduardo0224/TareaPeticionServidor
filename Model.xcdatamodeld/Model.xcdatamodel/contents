@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Xcode 7.0">
-    <entity name="Libro" syncable="YES">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Xcode 7.0" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Libro" representedClassName="" syncable="YES">
         <attribute name="autor" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isbn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="portada" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -9,6 +9,6 @@
     <fetchRequest name="peticionLibro" entity="Libro" predicateString="isbn == $isbn"/>
     <fetchRequest name="peticionLibros" entity="Libro"/>
     <elements>
-        <element name="Libro" positionX="-63" positionY="-18" width="128" height="30"/>
+        <element name="Libro" positionX="-63" positionY="-18" width="128" height="105"/>
     </elements>
 </model>

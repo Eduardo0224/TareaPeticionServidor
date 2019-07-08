@@ -28,12 +28,12 @@ class DetailViewController: UIViewController {
         imgPortada.image = portadaDetalle
         imgPortadaBackground.image = portadaDetalle
         
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         
         //always fill the view
         blurEffectView.frame = self.imgPortadaBackground.bounds
-        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         self.imgPortadaBackground.addSubview(blurEffectView)
     }

@@ -47,21 +47,21 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.contexto = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        self.contexto = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
         
-        let libroEntidad = NSEntityDescription.entityForName("Libro", inManagedObjectContext: self.contexto!)
+        let libroEntidad = NSEntityDescription.entity(forEntityName: "Libro", in: self.contexto!)
         
-        let peticion = libroEntidad?.managedObjectModel.fetchRequestTemplateForName("peticionLibros")
+        let peticion = libroEntidad?.managedObjectModel.fetchRequestTemplate(forName: "peticionLibros")
         
         do {
-            let librosEntidad = try self.contexto?.executeFetchRequest(peticion!)
+            let librosEntidad = try self.contexto?.fetch(peticion!) as! [NSManagedObject]
             
-            for libro in librosEntidad! {
-                let tituloEntidad = libro.valueForKey("titulo") as! String
-                let autorEntidad = libro.valueForKey("autor") as! String
+            for libro in librosEntidad {
+                let tituloEntidad = libro.value(forKey: "titulo") as! String
+                let autorEntidad = libro.value(forKey: "autor") as! String
                 
                 let bSVC = BookSearchViewController()
-                let portadaEntidad = bSVC.imageWithBorderFromImage(UIImage(data: libro.valueForKey("portada") as! NSData)!)
+                let portadaEntidad = bSVC.imageWithBorderFromImage(source: UIImage(data: libro.value(forKey: "portada") as! Data)!)               
                 
                 self.titulos.append(tituloEntidad)
                 self.autores.append(autorEntidad)
@@ -77,21 +77,18 @@ class TableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
 
-        // Cambiar el color de la barra de estado
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
-        
-        self.navigationController!.navigationBar.barStyle = .BlackTranslucent;
-        self.navigationController!.navigationBar.translucent = true;
+        self.navigationController!.navigationBar.barStyle = .blackTranslucent;
+        self.navigationController!.navigationBar.isTranslucent = true;
         self.navigationItem.title = "Libros"
-        
-
-
-
     }
     
-    override func viewDidAppear(animated: Bool) {
+     // Cambiar el color de la barra de estado
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         
 
         
@@ -106,27 +103,25 @@ class TableViewController: UITableViewController {
         
         self.tableView!.reloadData()
         
-        tableView.separatorInset = UIEdgeInsetsZero
-        self.tableView.backgroundView!.backgroundColor = UIColor.clearColor()
+        tableView.separatorInset = UIEdgeInsets.zero
+        self.tableView.backgroundView!.backgroundColor = UIColor.clear
         
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         
         //always fill the view
         blurEffectView.frame = self.tableView.backgroundView!.bounds
-        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         self.tableView.backgroundView!.addSubview(blurEffectView)
         
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.white
         
     }
     
-    
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueBookSearch" {
-            let bookSearch = segue.destinationViewController as? BookSearchViewController
+            let bookSearch = segue.destination as? BookSearchViewController
             bookSearch!.delegate = self
             bookSearch!.delegateNuevoDelegado = self
         }
@@ -134,134 +129,73 @@ class TableViewController: UITableViewController {
         if segue.identifier == "segueDetail" {
             
             print("Encontro el identifier del segue")
-            if let destination = segue.destinationViewController as? DetailViewController {
-                            print("El viewcontroller de destino se castea a DeatilViewController")
+            if let destination = segue.destination as? DetailViewController {
+                print("El viewcontroller de destino se castea a DeatilViewController")
                 
-                    
-                    
-                    print("El sender es un UITableViewCell")
-                    
                 
-                    print("El indexPath es \(index)")
-                    
-                    let tituloD = self.titulos[index!]
-                    destination.tituloDetalle = tituloD
-                    
-                    let autoresD = self.autores[index!]
-                    destination.autoresDetalle = autoresD
-                    
-                    let portadaD = self.portadas[index!]
-                    destination.portadaDetalle = portadaD
+                
+                print("El sender es un UITableViewCell")
+                
+                
+                print("El indexPath es \(String(describing: index))")
+                
+                let tituloD = self.titulos[index!]
+                destination.tituloDetalle = tituloD
+                
+                let autoresD = self.autores[index!]
+                destination.autoresDetalle = autoresD
+                
+                let portadaD = self.portadas[index!]
+                destination.portadaDetalle = portadaD
                 
             }
         }
-        
-        
-    }
+    }    
+}
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+extension TableViewController {
     // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         print("Cantidad de elementos en el arreglo de titulos \(self.titulos.count)")
         return self.titulos.count
     }
-
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
-        var cell = tableView.dequeueReusableCellWithIdentifier("Celda")!
-        cell = UITableViewCell(style: .Default, reuseIdentifier: "Celda")
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "Celda")!
+        cell = UITableViewCell(style: .default, reuseIdentifier: "Celda")
         
         // Configure the cell...
         cell.textLabel?.text = self.titulos[indexPath.row]
-        cell.textLabel?.shadowColor = UIColor.blackColor()
+        cell.textLabel?.shadowColor = UIColor.black
         cell.textLabel?.shadowOffset = CGSize(width: 0, height: 1)
         
         if(indexPath.row % 2 == 1){
-            cell.backgroundColor = UIColor.clearColor()
+            cell.backgroundColor = UIColor.clear
         }else{
-            cell.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
+            cell.backgroundColor = UIColor.white.withAlphaComponent(0.1)
         }
         
         let color = UIColor(red: 180 / 255, green: 138 / 255, blue: 171 / 255, alpha: 1)
         let myCustomSelectionColorView = UIView()
         myCustomSelectionColorView.backgroundColor = color
         cell.selectedBackgroundView = myCustomSelectionColorView
-
-        cell.textLabel?.textColor = UIColor.whiteColor()
-
-        cell.separatorInset = UIEdgeInsetsZero
+        
+        cell.textLabel?.textColor = UIColor.white
+        
+        cell.separatorInset = UIEdgeInsets.zero
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if let _ = tableView.cellForRowAtIndexPath(indexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let _ = tableView.cellForRow(at: indexPath) {
             print(self.titulos[indexPath.row])
             index = indexPath.row
-            performSegueWithIdentifier("segueDetail", sender: self)
+            performSegue(withIdentifier: "segueDetail", sender: self)
         }
-        else {
-        }
-
     }
-    
-
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
