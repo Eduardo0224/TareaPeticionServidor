@@ -17,7 +17,7 @@ protocol NuevoDelegado {
     func mandarTitulo(tituloMandado : String, imagenMandada: UIImage, _autorMandado: String)
 }
 
-class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchBarDelegate {
+class BookSearchViewController: UIViewController, UITextFieldDelegate {
     
     // nos permite acceder al contexto de la pila de core data
     var contexto : NSManagedObjectContext? = nil
@@ -42,7 +42,9 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
     var logoImageView   : UIImageView!
     
     var modelo : Model = Model(_titulo: [])
-
+    
+    var currentSearchTask: URLSessionTask?
+    var spinner = UIActivityIndicatorView()
     
     var urlImg : URL?
     
@@ -54,39 +56,32 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
         return UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad
     }
     
-    // Establecemos la dirección del servidor
-    var urls = "https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:"
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        self.contexto = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
-        
+    fileprivate func setupBackgroundImage() {
         // MARK: Efecto Blur
         imgBackground.backgroundColor = UIColor.clear
-        
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        
         //always fill the view
         blurEffectView.frame = imgBackground.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
         imgBackground.addSubview(blurEffectView)
-        
+    }
+    
+    fileprivate func setupShadowToTitleLabel() {
         lblTituloLibro.shadowColor = UIColor.black
         lblTituloLibro.shadowOffset = CGSize(width: 0, height: 1)
-        
-        self.navigationController!.navigationBar.barStyle = .blackTranslucent;
-        self.navigationController!.navigationBar.isTranslucent = true;
-
-
+    }
+    
+    fileprivate func setupNavigationBar() {
+        self.navigationController!.navigationBar.barStyle = .blackTranslucent
+        self.navigationController!.navigationBar.isTranslucent = true
         let rightSearchBarButtonItem : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(showSearchBar))
         rightSearchBarButtonItem.tintColor = UIColor.white
         self.navigationController?.navigationBar.tintColor = UIColor.white
         self.navigationItem.setRightBarButton(rightSearchBarButtonItem, animated: true)
-
-        
+    }
+    
+    fileprivate func setupSearchBar() {
         // MARK: Aquí todo lo de el searchBar
         // Can replace logoImageView for titleLabel of navbar
         let logoImage = UIImage()
@@ -96,13 +91,24 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
         
         searchBar.tintColor = UIColor.white
         UITextField.appearance(whenContainedInInstancesOf: [BookSearchViewController.self]).tintColor = .lightText
-//        UITextField.appearanceWhenContainedInInstancesOfClasses([BookSearchViewController.self]).keyboardAppearance = .light
+        UITextField.appearance(whenContainedInInstancesOf: [BookSearchViewController.self]).keyboardAppearance = .light
         searchBar.delegate = self
         searchBar.showsCancelButton = true
         searchBar.searchBarStyle = UISearchBar.Style.default
         searchBar.placeholder = "Ingrese el ISBN"
-
+        
         searchBarButtonItem = navigationItem.rightBarButtonItem
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        self.contexto = (UIApplication.shared.delegate as! AppDelegate).managedObjectContext
+        
+        setupBackgroundImage()
+        setupShadowToTitleLabel()
+        setupNavigationBar()
+        setupSearchBar()
     }
     
     // Cambiar el color de la barra de estado
@@ -112,7 +118,6 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
     
     // MARK: Métodos de UISearchBar
     @objc func showSearchBar() {
-
         navigationItem.titleView = searchBar
         searchBar.alpha = 0
         navigationItem.setRightBarButton(nil, animated: true)
@@ -124,16 +129,173 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
     }
     
     func hideSearchBar() {
-        navigationItem.setRightBarButton(searchBarButtonItem, animated: true)
-        logoImageView.alpha = 0
-        UIView.animate(withDuration: 0.3, animations: {
-            self.navigationItem.titleView = self.logoImageView
-            self.logoImageView.alpha = 1
+        DispatchQueue.main.async {
+            self.navigationItem.setRightBarButton(self.searchBarButtonItem, animated: true)
+            self.logoImageView.alpha = 0
+            UIView.animate(withDuration: 0.3, animations: {
+                self.navigationItem.titleView = self.logoImageView
+                self.logoImageView.alpha = 1
             }, completion: { finished in
                 
-        })
+            })
+        }
     }
     
+    func crearImagenEntidad(imagenPortadaLista : UIImage) -> NSObject {
+        var entidadADevolver : NSObject? = nil
+        let imagenEntidad = NSEntityDescription.insertNewObject(forEntityName: "Libro", into: self.contexto!)
+        imagenEntidad.setValue(imagenPortadaLista.pngData(), forKey: "portada")
+        entidadADevolver = imagenEntidad as NSObject
+        return entidadADevolver!
+    }
+    
+    func imageWithBorderFromImage(source: UIImage) -> UIImage {
+        let size: CGSize = source.size
+        UIGraphicsBeginImageContext(size)
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        source.draw(in: rect, blendMode: .darken, alpha: 1.0)
+        let context: CGContext = UIGraphicsGetCurrentContext()!
+        context.setStrokeColor(UIColor.white.cgColor)
+        context.stroke(rect, width: Device.IS_3_5_INCHES() || Device.IS_4_INCHES() ? 4.5 : 10.0)
+        let testImg: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return testImg
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    fileprivate func setupActivityIndicator() {
+        // MARK: Creamos un spinner para dar feedback al usuario que se esta cargando la imagen de portada
+        spinner = UIActivityIndicatorView(style: .whiteLarge)
+        spinner.center = CGPoint(x: self.imgPortadaLibro.frame.width / 2.0, y: self.imgPortadaLibro.frame.height / 2.0)
+        self.imgPortadaLibro.addSubview(spinner)
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
+    }
+    
+    fileprivate func setBookTitleLabels(_ book: BookData) {
+        // MARK: Establece título del libro
+        let title = book.title
+        self.lblTituloLibro.text = title
+        self.modelo.titulo.append(title)
+        self.delegate?.updateData(data: self.modelo)
+        self.tituloAMandar = title
+    }
+    
+    fileprivate func setBookAuthorsLabels(_ book: BookData) {
+        
+        self.lblAutors.text = "Por "
+        self.autoresEntidad = ""
+        var index: Int = 0
+        for author in book.authors {
+            if index == book.authors.count - 1 {
+                self.autoresEntidad = self.autoresEntidad + author.name
+                self.lblAutors.text = self.lblAutors.text! + author.name
+            } else {
+                self.autoresEntidad = self.autoresEntidad + author.name + ", "
+                self.lblAutors.text = self.lblAutors.text! + author.name + ", "
+            }
+            index += 1
+        }
+        
+        self.autoresAMandar = self.lblAutors.text!
+        
+        // Código nuevo para colocar diferentes colores en un mismo label
+        let text: NSMutableAttributedString = NSMutableAttributedString(attributedString: self.lblAutors.attributedText!)
+        text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: NSMakeRange(0, 3))
+        self.lblAutors.attributedText = text
+    }
+    
+    private func getCorrectCoverImageUrl(_ book: BookData) -> URL? {
+        var urlCover = URL(string: "")
+        
+        if self.iPhone {
+            if Device.IS_3_5_INCHES() {
+                urlCover = URL(string: book.cover["small"] ?? "")
+            }
+            else if Device.IS_4_INCHES() {
+                urlCover = URL(string: book.cover["medium"] ?? "")
+            }
+            else if Device.IS_4_7_INCHES() {
+                urlCover = URL(string: book.cover["medium"] ?? "")
+            }
+            else if Device.IS_5_5_INCHES() {
+                urlCover = URL(string: book.cover["large"] ?? "")
+            }
+        } else {
+            urlCover = URL(string: book.cover["large"] ?? "")
+        }
+        return urlCover
+    }
+    
+    fileprivate func setBookCoverImages(_ book: BookData) -> Data? {
+        let data = try! Data(contentsOf: getCorrectCoverImageUrl(book)!)
+        self.imgPortadaLibro.image = UIImage(data: data as Data)
+        self.imgBackground.image = UIImage(data: data as Data)
+        self.imgPortadaLibro.image = self.imageWithBorderFromImage(source: UIImage(data: data as Data)!)
+        return data
+    }
+    
+    private func handleBookSearch(obtainedBook: BookData?, error: Error?) {
+        
+        if let _ = error {
+            removeActivityIndicator()
+            hideSearchBar()
+            self.alert(message: "Hubo un error al intentar encontrar el libro, Intenta de nuevo")
+            return
+        }
+        guard let book = obtainedBook else {
+            removeActivityIndicator()
+            hideSearchBar()
+            self.alert(message: "Hubo un error al intentar encontrar el libro, Intenta de nuevo")
+            return
+        }
+        
+        setBookTitleLabels(book)
+        setBookAuthorsLabels(book)
+        if let dataCover = setBookCoverImages(book) {
+            saveBookEntity(dataCover)
+        }
+        
+        self.delegateNuevoDelegado?.mandarTitulo(tituloMandado: self.tituloAMandar, imagenMandada: self.imgPortadaLibro.image!, _autorMandado: self.autoresAMandar)
+        removeActivityIndicator()
+        hideSearchBar()
+    }
+    
+    private func removeActivityIndicator() {
+        DispatchQueue.main.async {
+            self.spinner.stopAnimating()
+            self.spinner.removeFromSuperview()
+        }
+    }
+    
+    private func saveBookEntity(_ data: Data) {
+        let nuevoLibroEntidad  = NSEntityDescription.insertNewObject(forEntityName: "Libro", into: self.contexto!)
+        nuevoLibroEntidad.setValue(self.tituloAMandar, forKey: "titulo")
+        // alamcenar imagen
+        nuevoLibroEntidad.setValue(data, forKey: "portada")
+        // almacenar titulo
+        nuevoLibroEntidad.setValue(self.autoresEntidad, forKey: "autor")
+        // almacenar el ISBN
+        nuevoLibroEntidad.setValue(self.isbn, forKey: "isbn")
+        
+        do {
+            try self.contexto?.save()
+        }
+        catch {
+        }
+    }
+    
+    func obtenerInformacion(isbnText: String) {
+        self.isbn = isbnText
+        setupActivityIndicator()
+        ServiceSender.searchBy(isbn: isbnText, completion: handleBookSearch(obtainedBook:error:))
+    }
+}
+
+extension BookSearchViewController: UISearchBarDelegate {
     //MARK: UISearchBarDelegate
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         hideSearchBar()
@@ -144,7 +306,6 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
         if searchBar.text != "" {
             // le dice al delegado que el botón de de cancel ha sido presionado
             searchBarCancelButtonClicked(searchBar)
-
             
             // Antes de hacer la busqueda consultar si ese terminó ya fue consultado
             let libroEntidad = NSEntityDescription.entity(forEntityName: "Libro", in: self.contexto!)
@@ -189,215 +350,16 @@ class BookSearchViewController: UIViewController, UITextFieldDelegate, UISearchB
         }
         
     }
-    
-    func crearImagenEntidad(imagenPortadaLista : UIImage) -> NSObject {
-        var entidadADevolver : NSObject? = nil
-        
-        let imagenEntidad = NSEntityDescription.insertNewObject(forEntityName: "Libro", into: self.contexto!)
-        imagenEntidad.setValue(imagenPortadaLista.pngData(), forKey: "portada")
-        entidadADevolver = imagenEntidad as NSObject
-        return entidadADevolver!
-    }
+}
 
-    
-    
-    func imageWithBorderFromImage(source: UIImage) -> UIImage {
-        let size: CGSize = source.size
-        UIGraphicsBeginImageContext(size)
-        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        source.draw(in: rect, blendMode: .darken, alpha: 1.0)
-        let context: CGContext = UIGraphicsGetCurrentContext()!
-        context.setStrokeColor(UIColor.white.cgColor)
-        
-        
-        if Device.IS_3_5_INCHES() || Device.IS_4_INCHES() {
-            context.stroke(rect, width: 4.5)
+extension BookSearchViewController {
+    func alert(message : String) {
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alertController.addAction(ok)
+            self.present(alertController, animated: true, completion: nil)
         }
-        else {
-            context.stroke(rect, width: 10.0)
-        }
-        
-        let testImg: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return testImg
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
-    func obtenerInformacion(isbnText: String){
-        
-        // MARK: Creamos un spinner para dar feedback al usuario que se esta cargando la imagen de portada
-        let spinner = UIActivityIndicatorView(style: .whiteLarge)
-        spinner.center = CGPoint(x: self.imgPortadaLibro.frame.width / 2.0, y: self.imgPortadaLibro.frame.height / 2.0)
-        self.imgPortadaLibro.addSubview(spinner)
-        spinner.startAnimating()
-        spinner.hidesWhenStopped = true
-        
-        let apiUrl = "https://openlibrary.org/api/books?jscmd=data&format=json&bibkeys=ISBN:\(isbnText)"
-        let url = URL(string: apiUrl)
-        
-        URLSession.shared.dataTask(with: url!) { (data, res, err) in
-            
-        }
-        let task = URLSession.shared.dataTask(with: url!) {
-            (data, response, error) in
-            
-            DispatchQueue.main.async {
-                if((response) != nil){
-                    
-                    // Los datos obtenidos los codificamos a UTF8
-                    let texto = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)! as String
-                    
-                    if texto.contains(isbnText) {
-                        
-                        do{
-                            let jsonDatos = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
-                            let keyJsonData : String = "ISBN:" + isbnText
-                            
-                            self.isbn = isbnText
-                            
-                            
-                            if let datos = jsonDatos[keyJsonData] as? NSDictionary{
-                                
-                                
-                                if let nombreTitulo = datos["title"] as? String{
-                                    self.lblTituloLibro.text = nombreTitulo
-                                    
-                                    // Agregamos el título consultado al modelo
-                                    self.modelo.titulo.append(nombreTitulo)
-                                    
-                                    self.delegate?.updateData(data: self.modelo)
-                                    
-                                    self.tituloAMandar = nombreTitulo
-                                    
-                                }
-                                
-                                if let autores = datos["authors"] as? [[String : Any]] {
-                                   
-                                    self.lblAutors.text = "Por "
-                                    self.autoresEntidad = ""
-                                    var index: Int = 0
-                                    for nombreAutor in autores {
-                                        
-                                        if index == autores.count - 1 {
-                                            
-                                            
-                                            self.autoresEntidad = self.autoresEntidad + (nombreAutor["name"] as! String)
-                                            self.lblAutors.text = self.lblAutors.text! + (nombreAutor["name"] as! String)
-                                        }else{
-                                            self.autoresEntidad = self.autoresEntidad + (nombreAutor["name"] as! String) + ", "
-                                            self.lblAutors.text = self.lblAutors.text! + (nombreAutor["name"] as! String) + ", "
-                                        }
-                                        index += 1
-                                    }
-                                    
-                                    
-                                    self.autoresAMandar = self.lblAutors.text!
-                                    
-                                    // Código nuevo para colocar diferentes colores en un mismo label
-                                    let text: NSMutableAttributedString = NSMutableAttributedString(attributedString: self.lblAutors.attributedText!)
-                                    text.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.white, range: NSMakeRange(0, 3))
-                                    self.lblAutors.attributedText = text
-                                    // ------------
-
-                                }
-                                
-                                if let covers = datos["cover"] as? [String: Any] {
-                                    DispatchQueue.main.async {
-                                        
-                                        // Obtenemos el url de la imagen de portada y se lo pasamos a el UIImage
-//                                        let cover = datos["cover"]
-//                                        if cover != nil && cover is NSDictionary {
-//                                            let covers = datos["cover"] as! NSDictionary
-//
-//
-//                                        }
-                                        
-                                        var urlImage = URL(string: covers["medium"] as! String)
-                                        
-                                        if self.iPhone {
-                                            if Device.IS_3_5_INCHES() {
-                                                urlImage = URL(string: covers["small"] as! String)
-                                            }
-                                            else if Device.IS_4_INCHES() {
-                                                urlImage = URL(string: covers["medium"] as! String)
-                                            }
-                                            else if Device.IS_4_7_INCHES() {
-                                                urlImage = URL(string: covers["medium"] as! String)
-                                            }
-                                            else if Device.IS_5_5_INCHES() {
-                                                urlImage = URL(string: covers["large"] as!String)
-                                            }
-                                        } else {
-                                            urlImage = URL(string: covers["large"] as! String)
-                                        }
-                                        
-                                        
-                                        let data = try! Data(contentsOf: urlImage!)
-                                        self.imgPortadaLibro.image = UIImage(data: data as Data)
-                                        
-                                        self.imgBackground.image = UIImage(data: data as Data)
-                                        self.imgPortadaLibro.image = self.imageWithBorderFromImage(source: UIImage(data: data as Data)!)
-                                        
-                                        
-                                        self.delegateNuevoDelegado?.mandarTitulo(tituloMandado: self.tituloAMandar, imagenMandada: self.imgPortadaLibro.image!, _autorMandado: self.autoresAMandar)
-                                        spinner.stopAnimating()
-                                        spinner.removeFromSuperview()
-                                        
-                                        let nuevoLibroEntidad  = NSEntityDescription.insertNewObject(forEntityName: "Libro", into: self.contexto!)
-                                        nuevoLibroEntidad.setValue(self.tituloAMandar, forKey: "titulo")
-                                        
-                                        // alamcenar imagen
-                                        nuevoLibroEntidad.setValue(data, forKey: "portada")
-                                        // almacenar titulo
-                                        nuevoLibroEntidad.setValue(self.autoresEntidad, forKey: "autor")
-                                        // almacenar el ISBN
-                                        nuevoLibroEntidad.setValue(self.isbn, forKey: "isbn")
-                                        
-                                        do {
-                                            try self.contexto?.save()
-                                        }
-                                        catch {
-                                        }
-
-                                    }
-                                }
-                            }
-                        }catch _ {
-                            
-                        }
-                        
-                    }else{
-                        self.alert(message: "No se encontro información, con el ISBN introducido")
-                        spinner.stopAnimating()
-                        spinner.removeFromSuperview()
-                    }
-                    
-                }else{
-                    self.alert(message: "Error al conectar, compruebe su conexión a internet")
-                    spinner.stopAnimating()
-                    spinner.removeFromSuperview()
-                }
-            }
-        }
-        
-        task.resume()
-    }
-    
-    func alert(message : String){
-        let alertController = UIAlertController(title: "Error al conectar", message: message, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "Ok", style: .default, handler: nil)
-        alertController.addAction(ok)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-   
-    
-    
-
-    
-    
 }
 

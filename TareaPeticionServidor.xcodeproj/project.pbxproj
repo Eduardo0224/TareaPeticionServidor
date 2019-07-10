@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A0DDC74622D516100053ABAC /* ServiceSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DDC74522D516100053ABAC /* ServiceSender.swift */; };
+		A0DDC74822D51AFE0053ABAC /* BookData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DDC74722D51AFE0053ABAC /* BookData.swift */; };
+		A0DDC74A22D51B660053ABAC /* AuthorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DDC74922D51B660053ABAC /* AuthorData.swift */; };
 		B21BE3AD1C15BC1400F024D3 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21BE3AC1C15BC1400F024D3 /* TableViewController.swift */; };
 		B23BCB551C235BB100C81F86 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B23BCB531C235BB100C81F86 /* Model.xcdatamodeld */; };
 		B23D0A371BFC05EB007CFF3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23D0A361BFC05EB007CFF3C /* AppDelegate.swift */; };
@@ -40,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A0DDC74522D516100053ABAC /* ServiceSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ServiceSender.swift; path = ../ServiceSender.swift; sourceTree = "<group>"; };
+		A0DDC74722D51AFE0053ABAC /* BookData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookData.swift; sourceTree = "<group>"; };
+		A0DDC74922D51B660053ABAC /* AuthorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorData.swift; sourceTree = "<group>"; };
 		B21BE3AC1C15BC1400F024D3 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		B23BCB541C235BB100C81F86 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		B23D0A331BFC05EB007CFF3C /* TareaPeticionServidor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TareaPeticionServidor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +177,9 @@
 			isa = PBXGroup;
 			children = (
 				B277F1F21C1B35FD00949FC5 /* Model.swift */,
+				A0DDC74522D516100053ABAC /* ServiceSender.swift */,
+				A0DDC74722D51AFE0053ABAC /* BookData.swift */,
+				A0DDC74922D51B660053ABAC /* AuthorData.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -308,12 +317,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0DDC74622D516100053ABAC /* ServiceSender.swift in Sources */,
 				B277F1F31C1B35FD00949FC5 /* Model.swift in Sources */,
 				B2EA66A01C0904A500EEB709 /* Device.swift in Sources */,
 				B23D0A391BFC05EB007CFF3C /* BookSearchViewController.swift in Sources */,
 				B23BCB551C235BB100C81F86 /* Model.xcdatamodeld in Sources */,
+				A0DDC74822D51AFE0053ABAC /* BookData.swift in Sources */,
 				B2FF85DF1C1DB20F0065C756 /* DetailViewController.swift in Sources */,
 				B23D0A371BFC05EB007CFF3C /* AppDelegate.swift in Sources */,
+				A0DDC74A22D51B660053ABAC /* AuthorData.swift in Sources */,
 				B21BE3AD1C15BC1400F024D3 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
